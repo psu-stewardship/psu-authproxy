@@ -1,8 +1,11 @@
 class User < ApplicationRecord
+  Devise.add_module(:remote_user_authenticatable, strategy: true, controller: :sessions, model: 'devise/models/remote_user_authenticatable')
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+
+  devise :remote_user_authenticatable
+  # devise :database_authenticatable, :registerable,
+  #        :recoverable, :rememberable, :validatable
 
 
   has_many :access_grants,
