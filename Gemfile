@@ -66,3 +66,5 @@ gem "doorkeeper", "~> 5.2"
 gem "devise", "~> 4.7"
 
 gem "pry", "~> 0.12.2"
+
+gem "rspec-rails", "~> 3.8"
