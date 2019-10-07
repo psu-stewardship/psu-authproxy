@@ -1,5 +1,5 @@
 
-require 'devise/strategies/remote_user_authenticatable.rb'
+require "devise/strategies/remote_user_authenticatable.rb"
 
 module Devise
   module Models

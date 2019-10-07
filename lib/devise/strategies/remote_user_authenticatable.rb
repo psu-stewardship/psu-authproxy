@@ -1,13 +1,14 @@
 # frozen_string_literal: true
 
-require 'devise/strategies/authenticatable'
+require "devise/strategies/authenticatable"
+
 module Devise
   module Strategies
     class RemoteUserAuthenticatable < Authenticatable
       def authenticate!
         access_id = remote_user(request.headers)
         Rails.logger.info "Devise Access ID ******* #{access_id}"
-        if access_id.present? 
+        if access_id.present?
           a = User.find_by(access_id: access_id)
           if a.nil?
             obj = User.create(access_id: access_id, email: "#{access_id}@psu.edu")
@@ -34,7 +35,7 @@ module Devise
       end
 
       def remote_user(headers)
-        headers.fetch('REMOTE_USER', nil) || headers.fetch('HTTP_REMOTE_USER', nil)
+        headers.fetch("REMOTE_USER", nil) || headers.fetch("HTTP_REMOTE_USER", nil)
       end
 
       protected
