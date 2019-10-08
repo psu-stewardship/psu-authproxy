@@ -12,6 +12,7 @@ module Devise
           a = User.find_by(access_id: access_id)
           if a.nil?
             obj = User.create(access_id: access_id, email: "#{access_id}@psu.edu")
+            obj.populate_ldap_attributes
             # if this_object.name == 'Approver'
             #   obj = this_object.create(access_id: access_id)
             # else
@@ -20,6 +21,7 @@ module Devise
             # end
           else
             obj = a
+            obj.populate_ldap_attributes
           end
           success!(obj)
         else

@@ -7,6 +7,14 @@ class User < ApplicationRecord
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :validatable
 
+  def populate_ldap_attributes
+    ldap = LdapController.new
+    results = ldap.ldap_attributes(self.access_id)
+    self.update_attributes(results)
+    puts 'you are here'
+    puts results[:sn]
+  end
+
   has_many :access_grants,
            class_name: "Doorkeeper::AccessGrant",
            foreign_key: :resource_owner_id,
@@ -16,4 +24,6 @@ class User < ApplicationRecord
            class_name: "Doorkeeper::AccessToken",
            foreign_key: :resource_owner_id,
            dependent: :delete_all # or :destroy if you need callbacks
+
+  private
 end
