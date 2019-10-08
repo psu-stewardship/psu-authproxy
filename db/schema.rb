@@ -11,7 +11,6 @@
 # It's strongly recommended that you check this file into your version control system.
 
 ActiveRecord::Schema.define(version: 2019_10_08_015548) do
-
   create_table "oauth_access_grants", force: :cascade do |t|
     t.integer "resource_owner_id", null: false
     t.integer "application_id", null: false
@@ -62,7 +61,7 @@ ActiveRecord::Schema.define(version: 2019_10_08_015548) do
     t.index ["user_id"], name: "index_umgs_on_user_id"
   end
 
-# Could not dump table "users" because of following StandardError
-#   Unknown type 'bool' for column 'is_admin'
+  # Could not dump table "users" because of following StandardError
+  #   Unknown type 'bool' for column 'is_admin'
 
 end
