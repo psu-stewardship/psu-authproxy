@@ -70,3 +70,5 @@ gem "pry", "~> 0.12.2"
 gem "rspec-rails", "~> 3.8"
 
 gem "net-ldap", "~> 0.16.1"
+
+gem "pg", "~> 1.1"
