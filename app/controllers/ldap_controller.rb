@@ -18,10 +18,15 @@ class LdapController < ApplicationController
     end
 
     def ldap_attributes(access_id)
+        # TODO parameterize a lot of the LDAP stuff 
+        admin_umg = 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
         result = find(access_id)
         @attributes[:last_name] = result[:sn][0]
         @attributes[:first_name] = result[:givenname][0]
         @attributes[:primary_affiliation] = result[:edupersonprimaryaffiliation][0]
+        if result[:psmemberof].include? admin_umg
+            @attributes[:is_admin] = true
+        end
         @attributes
     end
 end

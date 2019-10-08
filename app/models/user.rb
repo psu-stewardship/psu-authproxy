@@ -7,12 +7,14 @@ class User < ApplicationRecord
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :validatable
 
+  def is_admin?
+    return self.is_admin
+  end
+
   def populate_ldap_attributes
     ldap = LdapController.new
     results = ldap.ldap_attributes(self.access_id)
     self.update_attributes(results)
-    puts 'you are here'
-    puts results[:sn]
   end
 
   has_many :access_grants,

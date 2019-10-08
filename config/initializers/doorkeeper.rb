@@ -21,7 +21,11 @@ Doorkeeper.configure do
   #
 
   admin_authenticator do |routes|
-    current_user || warden.authenticate!(scope: :user)
+    if current_user
+      head :forbidden unless current_user.is_admin?
+    else
+      warden.authenticate!(scope: :user)
+    end
   end
   #   # Put your admin authentication logic here.
   #   # Example implementation:
