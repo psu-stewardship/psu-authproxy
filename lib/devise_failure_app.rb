@@ -2,12 +2,7 @@
 
 class RedirectToWebaccessFailure < Devise::FailureApp
   def redirect_url
-    # TODO redirect this to the right place
-    # referer = request.params[:redirect_uri]
-    # referer = request.params.redirect_uri || request.referer
-    # request.headers["REMOTE_USER"] = "abc1245"
-    # request.env["REQUEST_URI"]
-    "https://webaccess.psu.edu/?cosign-psu-authproxy-test.dsrd.libraries.psu.edu&https://psu-authproxy-test.dsrd.libraries.psu.edu/oauth/applications"
+    "https://webaccess.psu.edu/?cosign-#{request.host}&https://#{request.host}/oauth/authorize?client_id=#{request.params[:client_id]}&redirect_uri=#{request.params[:redirect_uri]}&response_type=#{request.params[:response_type]}&state=#{request.params[:state]}"
   end
 
   def respond
