@@ -8,7 +8,9 @@ module Devise
       def authenticate!
         access_id = remote_user(request.headers)
         Rails.logger.info "Devise Access ID ******* #{access_id}"
-        if access_id.present?
+        # TODO fix this
+        if access_id.present? and access_id != '(null)'
+          Rails.logger.info "Access ID Present. #{access_id.length}"
           a = User.find_by(access_id: access_id)
           if a.nil?
             obj = User.create(access_id: access_id, email: "#{access_id}@psu.edu")

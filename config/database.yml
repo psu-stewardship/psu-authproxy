@@ -10,6 +10,7 @@ default: &default
   database: <%= ENV.fetch("POSTGRES_DB", "psuauthproxy") %>
   username: <%= ENV.fetch("POSTGRES_USER", "psuauthproxy") %>
   password: <%= ENV.fetch("POSTGRES_PASSWORD", nil) %>
+  port: <%= ENV.fetch("POSTGRES_PORT", nil) %>
   host: <%= ENV.fetch("POSTGRES_HOST", nil) %>
 
   # http://guides.rubyonrails.org/configuring.html#database-pooling
