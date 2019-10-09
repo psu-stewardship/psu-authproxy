@@ -24,12 +24,16 @@ RUN npm install -g yarn
 
 RUN gem install bundler
 
+RUN useradd app -d /app -m
+RUN chown -R app /app
+USER app
+
 ADD Gemfile Gemfile.lock /app/
-RUN bundle
+RUN bundle install --deployment
 
 ENV TZ=America/New_York
 
-ADD . /app/
+ADD --chown=app . /app/
 
 RUN RAILS_ENV=production bundle exec rails assets:precompile
 
