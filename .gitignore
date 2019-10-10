@@ -5,6 +5,11 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 vendor/bundle
+.local
+.mutagen
+.vscode
+.yarnrc
+drone.sec
 
 # Ignore bundler config.
 /.bundle

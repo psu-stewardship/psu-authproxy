@@ -20,7 +20,7 @@ Doorkeeper.configure do
   # every time somebody will try to access the admin web interface.
   #
 
-  admin_authenticator do |routes|
+  admin_authenticator do |_routes|
     if current_user
       head :forbidden unless current_user.is_admin?
     else
@@ -350,7 +350,7 @@ Doorkeeper.configure do
   # so that the user skips the authorization step.
   # For example if dealing with a trusted application.
   #
-  skip_authorization do 
+  skip_authorization do
     true
   end
 

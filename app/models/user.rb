@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class User < ApplicationRecord
-  Devise.add_module(:remote_user_authenticatable, strategy: true, controller: :sessions, model: "devise/models/remote_user_authenticatable")
+  Devise.add_module(:remote_user_authenticatable, strategy: true, controller: :sessions, model: 'devise/models/remote_user_authenticatable')
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
@@ -8,22 +10,22 @@ class User < ApplicationRecord
   #        :recoverable, :rememberable, :validatable
 
   def is_admin?
-    return self.is_admin
+    is_admin
   end
 
   def populate_ldap_attributes
     ldap = LdapController.new
-    results = ldap.ldap_attributes(self.access_id)
-    self.update_attributes(results)
+    results = ldap.ldap_attributes(access_id)
+    update_attributes(results)
   end
 
   has_many :access_grants,
-           class_name: "Doorkeeper::AccessGrant",
+           class_name: 'Doorkeeper::AccessGrant',
            foreign_key: :resource_owner_id,
            dependent: :delete_all # or :destroy if you need callbacks
 
   has_many :access_tokens,
-           class_name: "Doorkeeper::AccessToken",
+           class_name: 'Doorkeeper::AccessToken',
            foreign_key: :resource_owner_id,
            dependent: :delete_all # or :destroy if you need callbacks
 

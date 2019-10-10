@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class UserController < ApplicationController
   before_action :doorkeeper_authorize!
   respond_to :json
