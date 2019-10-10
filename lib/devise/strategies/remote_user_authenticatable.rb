@@ -42,23 +42,6 @@ module Devise
         headers.fetch('REMOTE_USER', nil) || headers.fetch('HTTP_REMOTE_USER', nil)
       end
 
-      protected
-
-      # def authentication_type
-      #   uri = request.headers['REQUEST_URI']
-      #   this_uri = determine_login_type(uri)
-      #   # this_uri = uri.split('/')[1].camelcase
-      #   Object.const_get(this_uri)
-      # end
-
-      # def determine_login_type(uri)
-      #   this_uri = uri.split('/')
-      #   return 'Author' unless this_uri.length > 1
-
-      #   this_uri = uri.split('/')[1].camelcase
-      #   this_uri = 'Author' unless ['Author', 'Admin', 'Approver'].include? this_uri
-      #   this_uri
-      # end
     end
   end
 end
