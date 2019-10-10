@@ -19,26 +19,27 @@ steps:
   commands:
     - export DOCKER_HOST=unix:///var/run/host.sock
     - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
-    - docker build -t harbor.dsrd.libraries.psu.edu/library/ss-json:$DRONE_BUILD_NUMBER . 
-    - docker tag harbor.dsrd.libraries.psu.edu/library/ss-json:$DRONE_BUILD_NUMBER harbor.dsrd.libraries.psu.edu/library/ss-json:ci
-    - docker push harbor.dsrd.libraries.psu.edu/library/ss-json:$DRONE_BUILD_NUMBER
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER . 
+    - docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER harbor.dsrd.libraries.psu.edu/library/psu-authproxy:ci
+    - docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER
   volumes:
   - name: docker-sock
     path: /var/run/host.sock
 
-# - name: rspec
-#   image: harbor.dsrd.libraries.psu.edu/library/ss-json:ci
-#   user: root
-#   environment:
-#     RAILS_ENV: test
-#     POSTGRES_USER: ssjson
-#     POSTGRES_DB: ssjson
-#     POSTGRES_HOST: postgres
-#     POSTGRES_PASSWORD: ssjson
-#   commands:
-#     - bundle exec rails db:create
-#     - bundle exec rails db:migrate
-#     - bundle exec rspec
+- name: rspec
+  image: harbor.dsrd.libraries.psu.edu/library/psu-authproxy:ci
+  user: root
+  environment:
+    RAILS_ENV: test
+    POSTGRES_USER: ssjson
+    POSTGRES_DB: ssjson
+    POSTGRES_HOST: postgres
+    POSTGRES_PASSWORD: ssjson
+  commands:
+    - bundle
+    - bundle exec rails db:create
+    - bundle exec rails db:migrate
+    - bundle exec rspec
 
 - name: update ArgoCD (prod)
   image: alpine/git
@@ -53,8 +54,8 @@ steps:
       - pull_request
       - tag
   commands:
-    - git clone https://github.com/psu-stewardship/ss-json-config.git
-    - cd ss-json-config
+    - git clone https://github.com/psu-stewardship/psu-authproxy-config.git
+    - cd psu-authproxy-config
     - ./generate_application.sh
 
 - name: update ArgoCD (qa)
@@ -66,8 +67,8 @@ steps:
       include:
       - tag
   commands:
-    - git clone https://github.com/psu-stewardship/ss-json-config.git
-    - cd ss-json-config
+    - git clone https://github.com/psu-stewardship/psu-authproxy-config.git
+    - cd psu-authproxy-config
     - ./generate_application.sh
 
 - name: update ArgoCD (dev)
@@ -89,8 +90,8 @@ steps:
       - pull_request
       - tag
   commands:
-    - git clone https://github.com/psu-stewardship/ss-json-config.git
-    - cd ss-json-config
+    - git clone https://github.com/psu-stewardship/psu-authproxy-config.git
+    - cd psu-authproxy-config
     - ./generate_application.sh
 
 services:

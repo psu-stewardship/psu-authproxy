@@ -8,14 +8,14 @@ RSpec.describe LdapController, type: :controller do
       @ldap = LdapController.new
     end
 
-    it 'should return one result' do
+    it 'should return a result' do
       thing = @ldap.find('djb44')
-      expect(thing.length).to eq(1)
+      expect(thing.uid[0]).to eq("djb44")
     end
 
     it 'should return no results' do
       thing = @ldap.find('jfdlajflkdsajfl')
-      expect(thing.length).to eq(0)
+      expect(thing).to eq(nil)
     end
   end
 end
