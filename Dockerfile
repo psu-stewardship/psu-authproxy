@@ -1,6 +1,10 @@
 FROM ruby:2.6.5
 WORKDIR /app
 
+
+RUN apt-get update
+RUN apt-get -y upgrade
+
 ### Envconsul
 RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/envconsul_0.9.0_linux_amd64.zip && \
     unzip /tmp/envconsul.zip -d /bin && \
@@ -31,8 +35,6 @@ USER app
 ADD Gemfile Gemfile.lock /app/
 RUN bundle install --deployment
 
-RUN apt-get update
-RUN apt-get -y upgrade
 
 ENV TZ=America/New_York
 
