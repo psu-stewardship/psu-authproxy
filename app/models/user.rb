@@ -9,13 +9,8 @@ class User < ApplicationRecord
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :validatable
 
-  def is_admin?
-    is_admin
-  end
-
   def populate_ldap_attributes
-    ldap = LdapController.new
-    results = ldap.ldap_attributes(access_id)
+    results = PsuLdapService.find(access_id)
     update_attributes(results)
   end
 
