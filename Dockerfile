@@ -35,6 +35,6 @@ ENV TZ=America/New_York
 
 ADD --chown=app . /app/
 
-RUN RAILS_ENV=production bundle exec rails assets:precompile
+RUN RAILS_ENV=production SECRET_KEY_BASE=$(bundle exec rails secret) bundle exec rails assets:precompile
 
 CMD ["./entrypoint.sh"]
