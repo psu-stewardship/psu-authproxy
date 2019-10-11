@@ -31,6 +31,9 @@ USER app
 ADD Gemfile Gemfile.lock /app/
 RUN bundle install --deployment
 
+RUN apt-get update
+RUN apt-get -y upgrade
+
 ENV TZ=America/New_York
 
 ADD --chown=app . /app/
