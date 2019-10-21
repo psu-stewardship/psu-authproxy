@@ -74,7 +74,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.1.5)
-    crass (1.0.4)
+    crass (1.0.5)
     devise (4.7.1)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -115,6 +115,7 @@ GEM
     nio4r (2.5.2)
     nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
+    okcomputer (1.17.4)
     orm_adapter (0.5.0)
     pg (1.1.4)
     pry (0.12.2)
@@ -239,6 +240,7 @@ DEPENDENCIES
   jbuilder (~> 2.5)
   listen (>= 3.0.5, < 3.2)
   net-ldap (~> 0.16.1)
+  okcomputer (~> 1.17)
   pg (~> 1.1)
   pry (~> 0.12.2)
   puma (~> 3.11)
@@ -255,7 +257,7 @@ DEPENDENCIES
   web-console (>= 3.3.0)
 
 RUBY VERSION
-   ruby 2.6.3p62
+   ruby 2.6.5p114
 
 BUNDLED WITH
    2.0.2
