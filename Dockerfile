@@ -1,9 +1,11 @@
 FROM ruby:2.6.5
 WORKDIR /app
 
+ENV PACKAGES='curl unzip zlib1g-dev'
 
-RUN apt-get update
-RUN apt-get -y upgrade
+RUN apt-get update && \
+  apt-get -y --no-install-recommends install $PACKAGES && \
+  rm -rf /var/lib/apt/lists/*
 
 ### Envconsul
 RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/envconsul_0.9.0_linux_amd64.zip && \
