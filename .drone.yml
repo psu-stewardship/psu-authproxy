@@ -62,7 +62,7 @@ steps:
     DOCKER_PASSWORD:
       from_secret: DOCKER_PASSWORD
   commands:
-    - export DOCKER_HOST=unix///var/run/host.sock
+    - export DOCKER_HOST=unix:///var/run/host.sock
     - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER --target production . 
     - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
     - docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER
