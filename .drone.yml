@@ -129,9 +129,9 @@ services:
       - pull_request
       - tag
   environment:
-    POSTGRES_PASSWORD: ssjson
-    POSTGRES_USER: ssjson
-    POSTGRES_DB: ssjson
+    POSTGRES_PASSWORD: authproxy
+    POSTGRES_USER: authproxy
+    POSTGRES_DB: authproxy
   
 volumes:
 - name: docker-sock
