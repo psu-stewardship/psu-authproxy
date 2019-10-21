@@ -13,7 +13,6 @@ steps:
     event:
       exclude:
       - pull_request
-      - tag
   environment:
     DOCKER_PASSWORD:
       from_secret: DOCKER_PASSWORD
@@ -80,6 +79,7 @@ steps:
     event:
       exclude:
       - pull_request
+      - tag
   environment:
     DOCKER_PASSWORD:
       from_secret: DOCKER_PASSWORD
