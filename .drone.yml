@@ -152,7 +152,6 @@ services:
     event:
       exclude:
       - pull_request
-      - tag
   environment:
     POSTGRES_PASSWORD: authproxy
     POSTGRES_USER: authproxy
