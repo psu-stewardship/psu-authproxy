@@ -50,6 +50,9 @@ steps:
 
 - name: push 
   image: docker
+  volumes:
+  - name: docker-sock
+    path: /var/run/host.sock
   when:
     event:
       exclude:
