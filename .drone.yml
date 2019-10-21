@@ -24,11 +24,6 @@ steps:
   - name: docker-sock
     path: /var/run/host.sock
 
-- name: test-tag
-  image: alpine/git
-  commands:
-  - env
-
 - name: rspec
   image: docker
   volumes:
@@ -161,3 +156,8 @@ volumes:
 - name: docker-sock
   host:
     path: /var/run/docker.sock
+---
+kind: signature
+hmac: d2f053898ff8d27758d26a6c4f2162862161f88619447beb87c6fb6260e7d895
+
+...
