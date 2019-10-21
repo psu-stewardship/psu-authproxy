@@ -19,28 +19,34 @@ steps:
       from_secret: DOCKER_PASSWORD
   commands:
     - export DOCKER_HOST=unix:///var/run/host.sock
-    - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
-    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER . 
-    - docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER harbor.dsrd.libraries.psu.edu/library/psu-authproxy:ci
-    - docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER --target base . 
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER-rspec --target rspec . 
   volumes:
   - name: docker-sock
     path: /var/run/host.sock
 
 - name: rspec
-  image: harbor.dsrd.libraries.psu.edu/library/psu-authproxy:ci
+  image: docker
+  volumes:
+  - name: docker-sock
+    path: /var/run/host.sock
   user: root
   environment:
     RAILS_ENV: test
-    POSTGRES_USER: ssjson
-    POSTGRES_DB: ssjson
-    POSTGRES_HOST: postgres
-    POSTGRES_PASSWORD: ssjson
+    POSTGRES_USER: authproxy
+    POSTGRES_DB: authproxy
+    POSTGRES_PASSWORD: authproxy
   commands:
-    - bundle
-    - bundle exec rails db:create
-    - bundle exec rails db:migrate
-    - bundle exec rspec
+    - export DOCKER_HOST=unix:///var/run/host.sock
+    - apk add bind-tools
+    - export POSTGRES_HOST=$(dig +short postgres)
+    - docker run 
+      --net host
+      -e POSTGRES_HOST=$POSTGRES_HOST
+      -e POSTGRES_USER=authproxy
+      -e POSTGRES_PASSWORD=authproxy
+      -e POSTGRES_DB=authproxy
+      harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER-rspec
 
 - name: update ArgoCD (prod)
   image: alpine/git

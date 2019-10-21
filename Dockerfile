@@ -1,4 +1,4 @@
-FROM ruby:2.6.5
+FROM ruby:2.6.5 as base
 WORKDIR /app
 
 ENV PACKAGES='curl unzip zlib1g-dev'
@@ -42,6 +42,11 @@ ENV TZ=America/New_York
 
 ADD --chown=app . /app/
 
+CMD ["./entrypoint.sh"]
+
+FROM base as rspec
+CMD /app/bin/ci-rspec
+
+FROM base as production 
 RUN RAILS_ENV=production SECRET_KEY_BASE=$(bundle exec rails secret) bundle exec rails assets:precompile
 
-CMD ["./entrypoint.sh"]
