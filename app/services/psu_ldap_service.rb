@@ -32,13 +32,16 @@ class PsuLdapService
     def map_record_to_attributes(ldap_record)
       return nil if ldap_record.blank?
 
-      admin_umg = ldap_admin_umg
-      attributes = {
+      groups = ldap_record[:psmemberof].map { |g| g.force_encoding('UTF-8').to_s }
+
+      {
         last_name: ldap_record[:sn][0],
         first_name: ldap_record[:givenname][0],
         primary_affiliation: ldap_record[:edupersonprimaryaffiliation][0],
-        is_admin: ldap_record[:psmemberof].include?(admin_umg)
+        groups: groups,
+        admin_area: ldap_record[:psadminarea][0],
       }
+
     end
 
     def ldap_host
@@ -49,8 +52,6 @@ class PsuLdapService
       ENV['LDAP_BASE'] || 'dc=psu,dc=edu'
     end
 
-    def ldap_admin_umg
-      ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
-    end
+
   end
 end

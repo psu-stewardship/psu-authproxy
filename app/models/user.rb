@@ -11,7 +11,8 @@ class User < ApplicationRecord
 
   def populate_ldap_attributes
     results = PsuLdapService.find(access_id)
-    update_attributes(results)
+    is_admin = Array.wrap(results[:groups]).include?(ldap_admin_umg)
+    update_attributes!(is_admin: is_admin)
   end
 
   has_many :access_grants,
@@ -25,4 +26,8 @@ class User < ApplicationRecord
            dependent: :delete_all # or :destroy if you need callbacks
 
   private
+
+  def ldap_admin_umg
+    ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
+  end
 end
