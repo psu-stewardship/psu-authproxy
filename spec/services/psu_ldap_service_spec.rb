@@ -11,6 +11,7 @@ RSpec.describe PsuLdapService do
       let(:user_id) { 'djb44' }
 
       it 'should return a result' do
+        expect(attrs[:access_id]).to eq('djb44')
         expect(attrs[:last_name]).to eq('Bohn')
         expect(attrs[:first_name]).to eq('Dann')
         expect(attrs[:primary_affiliation]).to eq 'STAFF'

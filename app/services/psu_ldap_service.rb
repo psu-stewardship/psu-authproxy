@@ -39,6 +39,7 @@ class PsuLdapService
         first_name: ldap_record[:givenname][0],
         primary_affiliation: ldap_record[:edupersonprimaryaffiliation][0],
         groups: groups,
+        access_id: ldap_record[:uid][0],
         admin_area: ldap_record[:psadminarea][0],
       }
 
