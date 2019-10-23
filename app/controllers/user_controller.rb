@@ -20,8 +20,14 @@ class UserController < ApplicationController
     ldap_response = PsuLdapService.find(user.access_id)
 
     {
-      id: user.id,
+      uid: user.access_id,
       email: user.email,
-    }.merge(ldap_response)
+      last_name: ldap_response[:last_name],
+      first_name: ldap_response[:first_name],
+      primary_affiliation: ldap_response[:primary_affiliation],
+      groups: ldap_response[:groups],
+      access_id: ldap_response[:access_id],
+      admin_area: ldap_response[:admin_area],
+    }
   end
 end

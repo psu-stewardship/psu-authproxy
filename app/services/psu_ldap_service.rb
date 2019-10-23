@@ -34,6 +34,7 @@ class PsuLdapService
 
       groups = ldap_record[:psmemberof].map { |g| g.force_encoding('UTF-8').to_s }
 
+      # TODO Struct object here instead of hash?
       {
         last_name: ldap_record[:sn][0],
         first_name: ldap_record[:givenname][0],
