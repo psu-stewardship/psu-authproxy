@@ -7,7 +7,7 @@ Doorkeeper.configure do
 
   # This block will be called to check whether the resource owner is authenticated or not.
   resource_owner_authenticator do
-    current_user || warden.authenticate!(scope: :user, store: false)
+    current_user || warden.authenticate!(scope: :user)
     # raise "Please configure doorkeeper resource_owner_authenticator block located in #{__FILE__}"
     # Put your resource owner authentication logic here.
     # Example implementation:
@@ -335,9 +335,11 @@ Doorkeeper.configure do
   # Hook into Authorization flow in order to implement Single Sign Out
   # or add any other functionality.
   #
-  # before_successful_authorization do |controller|
-  #   Rails.logger.info(controller.request.params.inspect)
-  # end
+  before_successful_authorization do |controller|
+    # refresh session on each authorization
+    controller.session.destroy
+    # Rails.logger.info(controller.request.params.inspect)
+  end
   #
   # after_successful_authorization do |controller|
   #   controller.session[:logout_urls] <<
