@@ -35,7 +35,7 @@ RUN chown -R app /app
 USER app
 
 ADD Gemfile Gemfile.lock /app/
-RUN bundle install --deployment
+RUN bundle install --path vendor/bundle
 
 
 ENV TZ=America/New_York
