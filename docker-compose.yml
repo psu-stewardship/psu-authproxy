@@ -1,10 +1,5 @@
 version: '3.2'
 services:
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-    - "8080:8080"
   db:
     environment:
       POSTGRES_PASSWORD: psuauthproxy
@@ -16,6 +11,8 @@ services:
     volumes:
     - db-data:/var/lib/postgresql/data
   web:
+    tty: true
+    stdin_open: true
     environment:
       RAILS_SERVE_STATIC_FILES: "true"
       RAILS_ENV: development
@@ -28,10 +25,13 @@ services:
     command: >
       sh -c "echo starting database migrations &&
             yarn &&
+            rm -f tmp/pids/server.pid
             bundle exec rails db:migrate &&
             echo starting rails &&
             bundle exec rails s -b 0.0.0.0"
     volumes:
+      - /app/vendor/bundle
+      - /app/node_modules
       - type: bind
         source: .
         target: /app/
@@ -42,6 +42,4 @@ services:
     - db
 
 volumes:
-  redis-data:
-  minio:
   db-data:
