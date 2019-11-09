@@ -1,29 +1,5 @@
 version: '3.2'
 services:
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-    - "8080:8080"
-  # redis:
-  #   image: redis:5.0.5
-  #   command: redis-server --requirepass redispassword
-  #   volumes:
-  #   - redis-data:/data
-  #   ports:
-  #   - "6379:6379"
-  # minio:
-  #   command: '--compat server --address ":9001" /data'
-  #   environment:
-  #     CREATE_BUCKET: shrine
-  #     MINIO_ACCESS_KEY: foobarfoobar
-  #     MINIO_SECRET_KEY: foobarfoobar
-  #   image: minio/minio:latest
-  #   volumes:
-  #   - minio:/data
-  #   ports:
-  #   # my vscode gobbles up port 9000
-  #   - "9001:9001"
   db:
     environment:
       POSTGRES_PASSWORD: psuauthproxy
@@ -34,54 +10,36 @@ services:
     - "5433:5432"
     volumes:
     - db-data:/var/lib/postgresql/data
-  # sidekiq:
-  #   env_file: s3.env
-  #   environment:
-  #     REDIS_HOST: redis
-  #     REDIS_PASSWORD: redispassword
-  #     RAILS_SERVE_STATIC_FILES: "true"
-  #     RAILS_ENV: development
-  #     RAILS_LOG_TO_STDOUT: "true"
-  #     POSTGRES_USER: shrinedemo
-  #     POSTGRES_HOST: db
-  #     POSTGRES_DB: shrinedemo
-  #     POSTGRES_PASSWORD: shrinedemo
-  #   build: .
-  #   command: >
-  #     sh -c "bundle exec sidekiq"
-  # web:
-  #   # env_file: s3.env
-  #   environment:
-  #     REDIS_HOST: redis
-  #     REDIS_PASSWORD: redispassword
-  #     RAILS_SERVE_STATIC_FILES: "true"
-  #     RAILS_ENV: development
-  #     RAILS_LOG_TO_STDOUT: "true"
-  #     POSTGRES_USER: ssjson
-  #     POSTGRES_HOST: db
-  #     POSTGRES_DB: ssjson
-  #     DOORKEEPER_APP_URL: http://localhost:3000
-  #     DOORKEEPER_APP_ID: "-mlhNmfuAHRu3aTn4MH5cg66fdEZ2suEnAvdxXnA4Nk"
-  #     DOORKEEPER_APP_SECRET: "ztnCqljD5P1z0poYD8TI3YkY3Hdjwh9S3tA4znE8QG0"
-  #     POSTGRES_PASSWORD: ssjson
-  #   build: .
-  #   command: >
-  #     sh -c "echo starting database migrations &&
-  #           yarn &&
-  #           rails db:migrate &&
-  #           echo starting rails &&
-  #           rails s -b 0.0.0.0"
-  #   # volumes:
-  #   #   - type: bind
-  #   #     source: .
-  #   #     target: /app/
-  #   #     consistency: cached
-  #   ports:
-  #   - "3001:3000"
-  #   depends_on:
-  #   - db
+  web:
+    tty: true
+    stdin_open: true
+    environment:
+      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      POSTGRES_USER: psuauthproxy
+      POSTGRES_HOST: db
+      POSTGRES_DB: psuauthproxy
+      POSTGRES_PASSWORD: psuauthproxy
+    build: .
+    command: >
+      sh -c "echo starting database migrations &&
+            yarn &&
+            rm -f tmp/pids/server.pid
+            bundle exec rails db:migrate &&
+            echo starting rails &&
+            bundle exec rails s -b 0.0.0.0"
+    volumes:
+      - /app/vendor/bundle
+      - /app/node_modules
+      - type: bind
+        source: .
+        target: /app/
+        consistency: cached
+    ports:
+    - "3001:3000"
+    depends_on:
+    - db
 
 volumes:
-  redis-data:
-  minio:
   db-data:

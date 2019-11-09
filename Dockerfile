@@ -1,5 +1,11 @@
-FROM ruby:2.6.3
+FROM ruby:2.6.5 as base
 WORKDIR /app
+
+ENV PACKAGES='curl unzip zlib1g-dev'
+
+RUN apt-get update && \
+  apt-get -y --no-install-recommends install $PACKAGES && \
+  rm -rf /var/lib/apt/lists/*
 
 ### Envconsul
 RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/envconsul_0.9.0_linux_amd64.zip && \
@@ -29,12 +35,18 @@ RUN chown -R app /app
 USER app
 
 ADD Gemfile Gemfile.lock /app/
-RUN bundle install --deployment
+RUN bundle install --path vendor/bundle
+
 
 ENV TZ=America/New_York
 
 ADD --chown=app . /app/
 
-RUN RAILS_ENV=production bundle exec rails assets:precompile
-
 CMD ["./entrypoint.sh"]
+
+FROM base as rspec
+CMD /app/bin/ci-rspec
+
+FROM base as production 
+RUN RAILS_ENV=production SECRET_KEY_BASE=$(bundle exec rails secret) bundle exec rails assets:precompile
+

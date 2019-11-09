@@ -15,12 +15,6 @@ module Devise
           if a.nil?
             obj = User.create(access_id: access_id, email: "#{access_id}@psu.edu")
             obj.populate_ldap_attributes
-            # if this_object.name == 'Approver'
-            #   obj = this_object.create(access_id: access_id)
-            # else
-            #   obj = this_object.create(access_id: access_id, psu_email_address: "#{access_id}@psu.edu")
-            #   obj.populate_attributes
-            # end
           else
             obj = a
             obj.populate_ldap_attributes

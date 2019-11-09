@@ -3,7 +3,7 @@
 source 'https://rubygems.org'
 git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
-ruby '2.6.3'
+ruby '2.6.5'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.3'
@@ -74,3 +74,5 @@ gem 'rspec-rails', '~> 3.8'
 gem 'net-ldap', '~> 0.16.1'
 
 gem 'pg', '~> 1.1'
+
+gem "okcomputer", "~> 1.17"

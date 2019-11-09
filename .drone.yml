@@ -13,34 +13,76 @@ steps:
     event:
       exclude:
       - pull_request
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
+  commands:
+    - export DOCKER_HOST=unix:///var/run/host.sock
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER --target base . 
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER-rspec --target rspec . 
+  volumes:
+  - name: docker-sock
+    path: /var/run/host.sock
+
+- name: rspec
+  image: docker
+  volumes:
+  - name: docker-sock
+    path: /var/run/host.sock
+  user: root
+  environment:
+    RAILS_ENV: test
+    POSTGRES_USER: authproxy
+    POSTGRES_DB: authproxy
+    POSTGRES_PASSWORD: authproxy
+  commands:
+    - export DOCKER_HOST=unix:///var/run/host.sock
+    - apk add bind-tools
+    - export POSTGRES_HOST=$(dig +short postgres)
+    - docker run 
+      --net host
+      -e POSTGRES_HOST=$POSTGRES_HOST
+      -e POSTGRES_USER=authproxy
+      -e POSTGRES_PASSWORD=authproxy
+      -e POSTGRES_DB=authproxy
+      harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER-rspec
+
+- name: push-tag
+  image: docker
+  volumes:
+    - name: docker-sock
+      path: /var/run/host.sock
+  when:
+    event:
+      include: 
+        - tag
+  environment:
+    DOCKER_PASSWORD:
+      from_secret: DOCKER_PASSWORD
+  commands:
+    - export DOCKER_HOST=unix:///var/run/host.sock
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_TAG --target production . 
+    - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
+    - docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_TAG
+
+- name: push 
+  image: docker
+  volumes:
+  - name: docker-sock
+    path: /var/run/host.sock
+  when:
+    event:
+      exclude:
+      - pull_request
       - tag
   environment:
     DOCKER_PASSWORD:
       from_secret: DOCKER_PASSWORD
   commands:
     - export DOCKER_HOST=unix:///var/run/host.sock
+    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER --target production . 
     - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
-    - docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER . 
-    - docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER harbor.dsrd.libraries.psu.edu/library/psu-authproxy:ci
     - docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER
-  volumes:
-  - name: docker-sock
-    path: /var/run/host.sock
-
-- name: rspec
-  image: harbor.dsrd.libraries.psu.edu/library/psu-authproxy:ci
-  user: root
-  environment:
-    RAILS_ENV: test
-    POSTGRES_USER: ssjson
-    POSTGRES_DB: ssjson
-    POSTGRES_HOST: postgres
-    POSTGRES_PASSWORD: ssjson
-  commands:
-    - bundle
-    - bundle exec rails db:create
-    - bundle exec rails db:migrate
-    - bundle exec rspec
 
 - name: update ArgoCD (prod)
   image: alpine/git
@@ -105,13 +147,17 @@ services:
     event:
       exclude:
       - pull_request
-      - tag
   environment:
-    POSTGRES_PASSWORD: ssjson
-    POSTGRES_USER: ssjson
-    POSTGRES_DB: ssjson
+    POSTGRES_PASSWORD: authproxy
+    POSTGRES_USER: authproxy
+    POSTGRES_DB: authproxy
   
 volumes:
 - name: docker-sock
   host:
     path: /var/run/docker.sock
+---
+kind: signature
+hmac: d2f053898ff8d27758d26a6c4f2162862161f88619447beb87c6fb6260e7d895
+
+...
