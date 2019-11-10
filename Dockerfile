@@ -1,5 +1,8 @@
 FROM ruby:2.6.5 as base
+
 WORKDIR /app
+
+ENV TZ=America/New_York
 
 ENV PACKAGES='curl unzip zlib1g-dev'
 
@@ -13,7 +16,7 @@ RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/e
     rm /tmp/envconsul.zip
 
 ## NodeJS
-ENV NODE_VERSION 12.9.1
+ENV NODE_VERSION 12.13.0
 RUN mkdir /usr/local/nvm
 ENV NVM_DIR /usr/local/nvm
 RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.34.0/install.sh | bash
@@ -26,9 +29,9 @@ RUN . $NVM_DIR/nvm.sh \
     && nvm alias default $NODE_VERSION \
     && nvm use default
 
-RUN npm install -g yarn
+RUN npm install -g yarn@1.19.1
 
-RUN gem install bundler
+RUN gem install bundler:2.0.2
 
 RUN useradd app -d /app -m
 RUN chown -R app /app
@@ -36,9 +39,6 @@ USER app
 
 ADD Gemfile Gemfile.lock /app/
 RUN bundle install --path vendor/bundle
-
-
-ENV TZ=America/New_York
 
 ADD --chown=app . /app/
 
@@ -48,5 +48,6 @@ FROM base as rspec
 CMD /app/bin/ci-rspec
 
 FROM base as production 
+
 RUN RAILS_ENV=production SECRET_KEY_BASE=$(bundle exec rails secret) bundle exec rails assets:precompile
 
