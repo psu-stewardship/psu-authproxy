@@ -36,3 +36,6 @@ drone.sec
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+
+.bash_history
