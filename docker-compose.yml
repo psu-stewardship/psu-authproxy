@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.5'
 services:
   db:
     environment:
@@ -21,7 +21,9 @@ services:
       POSTGRES_HOST: db
       POSTGRES_DB: psuauthproxy
       POSTGRES_PASSWORD: psuauthproxy
-    build: .
+    build: 
+      context: .
+      target: base
     command: >
       sh -c "echo starting database migrations &&
             yarn &&
