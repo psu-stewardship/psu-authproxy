@@ -84,22 +84,22 @@ steps:
     - docker login -u 'robot$drone' -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
     - docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER
 
-- name: update ArgoCD (prod)
-  image: alpine/git
-  environment:
-    CONFIG_ENV: prod
-  when:
-    branch:
-      include:
-        - master
-    event:
-      exclude:
-      - pull_request
-      - tag
-  commands:
-    - git clone https://github.com/psu-stewardship/psu-authproxy-config.git
-    - cd psu-authproxy-config
-    - ./generate_application.sh
+# - name: update ArgoCD (prod)
+#   image: alpine/git
+#   environment:
+#     CONFIG_ENV: prod
+#   when:
+#     branch:
+#       include:
+#         - master
+#     event:
+#       exclude:
+#       - pull_request
+#       - tag
+#   commands:
+#     - git clone https://github.com/psu-stewardship/psu-authproxy-config.git
+#     - cd psu-authproxy-config
+#     - ./generate_application.sh
 
 - name: update ArgoCD (qa)
   image: alpine/git
@@ -158,6 +158,6 @@ volumes:
     path: /var/run/docker.sock
 ---
 kind: signature
-hmac: d2f053898ff8d27758d26a6c4f2162862161f88619447beb87c6fb6260e7d895
+hmac: c776ea12446432fce6459e0db47337851ba048cf2e6a85ba4c79fcac38959f07
 
 ...
