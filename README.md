@@ -1,24 +1,28 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
+Local Setup:
 
-* Ruby version
+# Start up psu-authproxy
+```
+docker-compose up -d
+```
 
-* System dependencies
+# Configure psu-authproxy
+Use a plugin to modify your request headers, and set REMOTE_USER to be your psu userid
+I use (https://bewisse.com/modheader/) with firefox
 
-* Configuration
+- log into http://localhost:3001/oauth/applications
+- Click "New Application"
+- Name: myradapp
+- Redirect URI: callbackurl for your app
+- Confidential: yes
+- Scopes: public
 
-* Database creation
+Once created set the 
+OAUTH_APP_ID
+OAUTH_APP_URL
+OAUTH_APP_SECRET
 
-* Database initialization
+variables in your app, where OAUTH_APP_URL is http://localhost:3001
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
