@@ -14,6 +14,8 @@ RSpec.describe PsuLdapService do
         expect(attrs[:access_id]).to eq('djb44')
         expect(attrs[:last_name]).to eq('Bohn')
         expect(attrs[:first_name]).to eq('Dann')
+        expect(attrs[:surname]).to eq('Bohn')
+        expect(attrs[:given_name]).to eq('Dann')
         expect(attrs[:primary_affiliation]).to eq 'STAFF'
         expect(attrs[:groups]).to include('cn=psu.up.all,dc=psu,dc=edu')
         expect(attrs[:admin_area]).to be_a(String)

@@ -36,6 +36,8 @@ class PsuLdapService
 
       # TODO Struct object here instead of hash?
       {
+        surname: ldap_record[:sn][0],
+        given_name: ldap_record[:givenname][0],
         last_name: ldap_record[:sn][0],
         first_name: ldap_record[:givenname][0],
         primary_affiliation: ldap_record[:edupersonprimaryaffiliation][0],
