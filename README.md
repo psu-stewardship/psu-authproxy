@@ -5,7 +5,7 @@ Local Setup:
 
 # Start up psu-authproxy
 ```
-docker-compose up -d
+docker-compose up --build -d
 ```
 
 # Configure psu-authproxy
@@ -19,10 +19,8 @@ I use (https://bewisse.com/modheader/) with firefox
 - Confidential: yes
 - Scopes: public
 
-Once created set the 
-OAUTH_APP_ID
-OAUTH_APP_URL
-OAUTH_APP_SECRET
-
-variables in your app, where OAUTH_APP_URL is http://localhost:3001
+Once created set the following environment variables in your app
+* OAUTH_APP_ID
+* OAUTH_APP_URL
+* OAUTH_APP_SECRET
 
