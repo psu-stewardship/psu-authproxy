@@ -24,3 +24,8 @@ Once created set the following environment variables in your app
 * OAUTH_APP_URL
 * OAUTH_APP_SECRET
 
+# Shut it down!
+
+```
+docker-compose down
+```
