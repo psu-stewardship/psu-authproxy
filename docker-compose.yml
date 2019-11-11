@@ -6,8 +6,6 @@ services:
       POSTGRES_USER: psuauthproxy
       POSTGRES_DB: psuauthproxy
     image: postgres:10
-    ports:
-    - "5433:5432"
     volumes:
     - db-data:/var/lib/postgresql/data
   web:
