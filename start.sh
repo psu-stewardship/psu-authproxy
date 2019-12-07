@@ -1,4 +1,6 @@
-
+if [ ${RAILS_ENV:-develop} != "production" ]; then 
+    bundle check || bundle
+fi
 
 if [ ${APP_ROLE:-app} == "sidekiq" ]; then
     echo "starting sidekiq"
