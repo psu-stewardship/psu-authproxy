@@ -12,7 +12,7 @@ class User < ApplicationRecord
   def populate_ldap_attributes
     results = PsuLdapService.find(access_id)
     is_admin = Array.wrap(results[:groups]).include?(ldap_admin_umg)
-    update_attributes!(is_admin: is_admin)
+    update_attributes!(is_admin: is_admin, surname: results[:surname], given_name: results[:given_name], groups: results[:groups])
   end
 
   has_many :access_grants,
