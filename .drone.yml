@@ -34,6 +34,9 @@ steps:
     RAILS_ENV: test
     POSTGRES_USER: authproxy
     POSTGRES_DB: authproxy
+    OIDC_ISSUER: localhost
+    OIDC_SIGNING_KEY:
+      from_secret: oidc_signing_key
     POSTGRES_PASSWORD: authproxy
   commands:
     - export DOCKER_HOST=unix:///var/run/host.sock
@@ -158,6 +161,6 @@ volumes:
     path: /var/run/docker.sock
 ---
 kind: signature
-hmac: c776ea12446432fce6459e0db47337851ba048cf2e6a85ba4c79fcac38959f07
+hmac: d456984eaeeff7d00623ccbade54e976275c875382fb28b78958f495f5d03a23
 
 ...
