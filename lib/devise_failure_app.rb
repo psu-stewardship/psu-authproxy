@@ -2,10 +2,11 @@
 
 class RedirectToWebaccessFailure < Devise::FailureApp
   def redirect_url
+    binding.pry
     if request.env['REQUEST_URI'].include?("/oauth/applications")
       "https://webaccess.psu.edu/?cosign-#{request.host}&https://#{request.host}/#{request.env['REQUEST_URI']}"
     else
-      "https://webaccess.psu.edu/?cosign-#{request.host}&https://#{request.host}/oauth/authorize?client_id=#{request.params[:client_id]}&redirect_uri=#{request.params[:redirect_uri]}&response_type=#{request.params[:response_type]}&state=#{request.params[:state]}"
+      "https://webaccess.psu.edu/?cosign-#{request.host}&https://#{request.host}/oauth/authorize?client_id=#{request.params[:client_id]}&redirect_uri=#{request.params[:redirect_uri]}&response_type=#{request.params[:response_type]}&state=#{request.params[:state]}&scope=#{request.params[:scope]}"
     end
   end
 
