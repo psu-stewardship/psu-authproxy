@@ -30,7 +30,7 @@ class PsuLdapService
     end
 
     def map_record_to_attributes(ldap_record)
-      return nil if ldap_record.blank?
+      return {} if ldap_record.blank?
 
       groups = ldap_record[:psmemberof].map { |g| g.force_encoding('UTF-8').to_s }
 
