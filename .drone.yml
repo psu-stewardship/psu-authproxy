@@ -34,6 +34,9 @@ steps:
     RAILS_ENV: test
     POSTGRES_USER: authproxy
     POSTGRES_DB: authproxy
+    OIDC_ISSUER: localhost
+    OIDC_SIGNING_KEY:
+      from_secret: oidc_signing_key
     POSTGRES_PASSWORD: authproxy
   commands:
     - export DOCKER_HOST=unix:///var/run/host.sock
@@ -44,6 +47,8 @@ steps:
       -e POSTGRES_HOST=$POSTGRES_HOST
       -e POSTGRES_USER=authproxy
       -e POSTGRES_PASSWORD=authproxy
+      -e OIDC_SIGNING_KEY=$OIDC_SIGNING_KEY
+      -e OIDC_ISSUER=$OIDC_ISSUER
       -e POSTGRES_DB=authproxy
       harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$DRONE_BUILD_NUMBER-rspec
 
@@ -158,6 +163,6 @@ volumes:
     path: /var/run/docker.sock
 ---
 kind: signature
-hmac: c776ea12446432fce6459e0db47337851ba048cf2e6a85ba4c79fcac38959f07
+hmac: f883a3ad1d86ce6fd3e3c73553d9d6c545b7d122fd801f079055523ffb527f66
 
 ...
