@@ -10,9 +10,24 @@ class User < ApplicationRecord
   #        :recoverable, :rememberable, :validatable
 
   def populate_ldap_attributes
-    results = PsuLdapService.find(access_id)
-    is_admin = Array.wrap(results[:groups]).include?(ldap_admin_umg)
-    update_attributes!(is_admin: is_admin, surname: results[:surname], given_name: results[:given_name], groups: results[:groups])
+    is_admin = Array.wrap(ldap_results[:groups]).include?(ldap_admin_umg)
+    update_attributes!(is_admin: is_admin)
+  end
+
+  def ldap_results
+    @ldap_results ||= PsuLdapService.find(access_id)
+  end
+
+  def groups
+    ldap_results[:groups]
+  end
+
+  def surname
+    ldap_results[:surname]
+  end
+
+  def given_name
+    ldap_results[:given_name]
   end
 
   has_many :access_grants,
