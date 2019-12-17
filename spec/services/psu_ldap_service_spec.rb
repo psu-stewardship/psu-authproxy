@@ -25,7 +25,7 @@ RSpec.describe PsuLdapService do
     context 'given a bogus psu user id' do
       let(:user_id) { 'completelybogus' }
 
-      it { is_expected.to be_nil }
+      it { is_expected.to eq({}) }
     end
 
     context 'given a specially malformed user id' do
