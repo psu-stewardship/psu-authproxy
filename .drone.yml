@@ -107,7 +107,7 @@ steps:
 #     - ./generate_application.sh
 
 - name: update ArgoCD (qa)
-  image: alpine/git
+  image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
   environment:
     CONFIG_ENV: qa
   when:
@@ -163,6 +163,6 @@ volumes:
     path: /var/run/docker.sock
 ---
 kind: signature
-hmac: f883a3ad1d86ce6fd3e3c73553d9d6c545b7d122fd801f079055523ffb527f66
+hmac: a1d962c448333bed36384df6016ac9c9d268e33958a2a39ec1d1472990643a40
 
 ...
