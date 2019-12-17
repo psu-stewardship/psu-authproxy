@@ -8,10 +8,14 @@ services:
     image: postgres:10
     volumes:
     - db-data:/var/lib/postgresql/data
+    ports:
+    - "5433:5432"
   web:
     tty: true
     stdin_open: true
     environment:
+      OIDC_SIGNING_KEY: ${OIDC_SIGNING_KEY}
+      OIDC_ISSUER: ${OIDC_ISSUER}
       RAILS_SERVE_STATIC_FILES: "true"
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
