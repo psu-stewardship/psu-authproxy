@@ -110,6 +110,7 @@ steps:
   image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
   environment:
     CONFIG_ENV: qa
+    REPLICAS: 2
   when:
     event:
       include:
@@ -163,6 +164,6 @@ volumes:
     path: /var/run/docker.sock
 ---
 kind: signature
-hmac: a1d962c448333bed36384df6016ac9c9d268e33958a2a39ec1d1472990643a40
+hmac: f8fa045904811bc31368f4f3d5dc3410960ef57178e18c1fe254603f87b58aaf
 
 ...
