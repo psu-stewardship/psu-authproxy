@@ -14,7 +14,7 @@ Doorkeeper::OpenidConnect.configure do
 
   auth_time_from_resource_owner do |resource_owner|
     # Example implementation:
-    # resource_owner.current_sign_in_at
+    resource_owner.current_sign_in_at
   end
 
   reauthenticate_resource_owner do |resource_owner, return_to|
