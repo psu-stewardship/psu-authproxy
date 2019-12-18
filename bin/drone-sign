@@ -1,0 +1,3 @@
+#!/bin/bash
+drone sign psu-stewardship/psu-authproxy --save
+
