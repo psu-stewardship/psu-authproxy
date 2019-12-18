@@ -111,6 +111,11 @@ steps:
   environment:
     CONFIG_ENV: qa
     REPLICA_COUNT: 2
+    ARGOCD_SERVER: argocd.dsrd.libraries.psu.edu
+    SLACK_WEBHOOK_URL:
+      from_secret: SLACK_WEBHOOK_URL
+    ARGOCD_AUTH_TOKEN:
+      from_secret: ARGOCD_AUTH_TOKEN
   when:
     event:
       include:
@@ -164,6 +169,6 @@ volumes:
     path: /var/run/docker.sock
 ---
 kind: signature
-hmac: 1b98c4b59c44b8a50cb05a0337d44b0456347dc055ee3bc9a20d0c02efe4cdf1
+hmac: 2ef1b4f7bfd02a799a86a3be556d312af3638120e89129c45e85a0df8d5685f0
 
 ...
