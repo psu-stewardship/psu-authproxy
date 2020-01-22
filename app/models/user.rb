@@ -22,7 +22,7 @@ class User < ApplicationRecord
   def groups
     if ldap_results[:access_id] == "djb44"
       ldap_results[:groups].append("superuser")
-      ldap_results[:groups].append("cn=umg-up.ul.dsrd.sudoersdc=psudc=edu")
+      ldap_results[:groups].append("cn=umg/up.ul.dsrd.sudoersdc=psudc=edu")
     end
     ldap_results[:groups]
   end
