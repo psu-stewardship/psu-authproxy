@@ -10,7 +10,6 @@ class User < ApplicationRecord
   #        :recoverable, :rememberable, :validatable
 
   def populate_ldap_attributes
-    ldap_results[:groups].append("superuser")
     is_admin = Array.wrap(ldap_results[:groups]).include?(ldap_admin_umg)
     update_attributes!(is_admin: is_admin)
   end
@@ -20,6 +19,9 @@ class User < ApplicationRecord
   end
 
   def groups
+    if ldap_results[:access_id] == "djb44"
+      ldap_results[:groups].append("superuser")
+    end
     ldap_results[:groups]
   end
 
