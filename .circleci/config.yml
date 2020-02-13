@@ -11,7 +11,7 @@ jobs:
           ssh-keyscan github.com > ~/.ssh/known_hosts
           git clone git@github.com:psu-stewardship/psu-authproxy-config.git
           cd psu-authproxy-config
-          ./generate_circle_application
+          ./generate_application.sh
   build:
     docker: 
       - image: tmaier/docker-compose:latest
