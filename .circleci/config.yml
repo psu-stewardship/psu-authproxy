@@ -38,7 +38,7 @@ jobs:
       - run:
           name: Push the Container
           command: |
-            docker login -u $DOCKER_USERNAME -p DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
             docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 
 
 
