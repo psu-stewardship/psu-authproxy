@@ -2,7 +2,8 @@ version: 2.1
 
 jobs:
   argocd_dev:
-    docker: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+    docker:
+      - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
     steps:
     - add_ssh_keys
     - run:
