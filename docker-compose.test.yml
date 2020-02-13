@@ -1,0 +1,16 @@
+version: '3.5'
+services:
+  test:
+    tty: true
+    stdin_open: true
+    environment:
+      OIDC_SIGNING_KEY: ${OIDC_SIGNING_KEY}
+      OIDC_ISSUER: ${OIDC_ISSUER}
+      RAILS_SERVE_STATIC_FILES: "true"
+      RAILS_ENV: development
+      RAILS_LOG_TO_STDOUT: "true"
+      POSTGRES_USER: psuauthproxy
+      POSTGRES_HOST: db
+      POSTGRES_DB: psuauthproxy
+      POSTGRES_PASSWORD: psuauthproxy
+    image: harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$TAG
