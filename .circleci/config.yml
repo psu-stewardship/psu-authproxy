@@ -46,7 +46,11 @@ workflows:
   version: 2
   psu-authproxy:
     jobs:
-      - build
+      - build:
+          filters:
+            tags:
+              only:
+                - /.*/
       - argocd_dev:
           requires:
             - build
@@ -54,3 +58,6 @@ workflows:
             branches:
               only:
                 - develop
+            tags:
+              only:
+                - /.*/
