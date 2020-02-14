@@ -4,6 +4,8 @@ jobs:
   release:
     docker:
       - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+        environment:
+          DOCKER_USERNAME: 'robot$circleci'
     steps:
       - add_ssh_keys
       - setup_remote_docker:
@@ -67,6 +69,8 @@ workflows:
                 - develop
       - release:
           filters:
+            branches:
+              ignore: /.*/ 
             tags:
               only:
                 - /.*/
