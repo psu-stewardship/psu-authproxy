@@ -1,6 +1,20 @@
 version: 2.1
 
 jobs:
+  release:
+    docker:
+      - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+    steps:
+      - add_ssh_keys
+      - setup_remote_docker:
+          docker_layer_caching: false
+      - run:
+          name: "Tag released image"
+          command: |
+            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
+            docker pull harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1
+            docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
+            docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
   argocd_dev:
     docker:
       - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
@@ -47,6 +61,11 @@ workflows:
   psu-authproxy:
     jobs:
       - build:
+          filters:
+            branches:
+              only:
+                - develop
+      - release:
           filters:
             tags:
               only:
