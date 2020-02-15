@@ -18,6 +18,20 @@ jobs:
             docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
             docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
 
+  argocd_qa:
+    docker:
+      - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+    steps:
+    - add_ssh_keys
+    - run:
+        name: Update ArgoCD
+        command: |
+          ssh-keyscan github.com > ~/.ssh/known_hosts
+          git clone git@github.com:psu-stewardship/psu-authproxy-config.git
+          cd psu-authproxy-config
+          ./generate_application.sh
+
+
   argocd_dev:
     docker:
       - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
