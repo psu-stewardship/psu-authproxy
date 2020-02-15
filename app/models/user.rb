@@ -19,9 +19,6 @@ class User < ApplicationRecord
   end
 
   def groups
-    if ldap_results[:groups].include?("cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu")
-      ldap_results[:groups].append("cn=umg/up.ul.dsrd.sudoersdc=psudc=edu")
-    end
     ldap_results[:groups]
   end
 
