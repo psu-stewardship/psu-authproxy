@@ -17,6 +17,7 @@ jobs:
             docker pull harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1
             docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
             docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
+
   argocd_dev:
     docker:
       - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
@@ -29,6 +30,7 @@ jobs:
           git clone git@github.com:psu-stewardship/psu-authproxy-config.git
           cd psu-authproxy-config
           ./generate_application.sh
+
   build:
     docker: 
       - image: tmaier/docker-compose:latest
@@ -62,11 +64,13 @@ workflows:
   version: 2
   psu-authproxy:
     jobs:
+
       - build:
           filters:
             branches:
               only:
                 - develop
+
       - release:
           filters:
             branches:
@@ -74,6 +78,19 @@ workflows:
             tags:
               only:
                 - /.*/
+
+      - argocd_qa:
+          requires:
+            - release
+          filters:
+            branches:
+              only:
+                - develop
+            tags:
+              only:
+                - /.*/
+
+
       - argocd_dev:
           requires:
             - build
