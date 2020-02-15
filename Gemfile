@@ -77,3 +77,5 @@ gem 'pg', '~> 1.1'
 gem "okcomputer", "~> 1.17"
 
 gem "doorkeeper-openid_connect", "~> 1.7"
+
+gem "simplecov", "~> 0.18.2", :group => :test
