@@ -67,6 +67,9 @@ jobs:
           command: |
             export TAG=${CIRCLE_SHA1}
             docker-compose -f docker-compose.yml -f docker-compose.test.yml run --name=test --service-ports test /app/bin/ci-rspec
+            docker cp test:/app/coverage . 
+      - store_artifacts:
+          path: coverage
       - run:
           name: Push the Container
           command: |
