@@ -1,0 +1,58 @@
+---
+securityDefinitions:
+  basic:
+    type: basic
+swagger: '2.0'
+info:
+  title: API V1
+  version: v1
+paths:
+  "/api/v1/application":
+    get:
+      summary: Gets a list of applications
+      tags:
+      - Application
+      security:
+      - basic: []
+      consumes:
+      - application/json
+      parameters:
+      - name: accept
+        in: header
+      responses:
+        '200':
+          description: Applications
+        '401':
+          description: Auth required
+    post:
+      summary: Creates an application
+      tags:
+      - Application
+      security:
+      - basic: []
+      consumes:
+      - application/json
+      parameters:
+      - name: application
+        in: body
+        schema:
+          type: object
+          properties:
+            name:
+              type: string
+            redirect_uri:
+              type: string
+            scopes:
+              type: array
+              items:
+                type: string
+            confidential:
+              type: boolean
+              default: true
+      responses:
+        '201':
+          description: application created
+        '500':
+          description: Invalid parameters
+        '302':
+          description: login required
