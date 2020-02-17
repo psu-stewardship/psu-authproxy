@@ -11,6 +11,8 @@ vendor/bundle
 .yarnrc
 drone.sec
 
+coverage
+
 # Ignore bundler config.
 /.bundle
 
