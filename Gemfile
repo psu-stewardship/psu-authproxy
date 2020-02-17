@@ -79,3 +79,9 @@ gem "okcomputer", "~> 1.17"
 gem "doorkeeper-openid_connect", "~> 1.7"
 
 gem "simplecov", "~> 0.18.2", :group => :test
+
+gem "rswag", "~> 2.2"
+
+gem "factory_bot", "~> 5.1"
+
+gem "factory_bot_rails", "~> 5.1"
