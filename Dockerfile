@@ -38,7 +38,7 @@ RUN chown -R app /app
 USER app
 
 ADD Gemfile Gemfile.lock /app/
-ADD vendor /app/vendor
+ADD --chown=app vendor /app/vendor
 RUN bundle install --path vendor/bundle
 
 ADD --chown=app . /app/
