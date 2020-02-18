@@ -29,3 +29,14 @@ Once created set the following environment variables in your app
 ```
 docker-compose down
 ```
+
+# Machine Users
+Machine Users have access to the API, they currently use basic auth on the api endpoints, and are manually created via the rails console 
+
+To create a machine user with the username "robot" and password "foobar" you would do the following in a rails console
+
+```
+u = User.create(username: "robot", password: "foobar", is_admin: true)
+
+u.save
+```
