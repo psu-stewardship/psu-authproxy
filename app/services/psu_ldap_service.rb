@@ -34,7 +34,7 @@ class PsuLdapService
 
       groups = ldap_record[:psmemberof].map { |g| g.force_encoding('UTF-8').to_s }
 
-      # TODO Struct object here instead of hash?
+      # TODO: Struct object here instead of hash?
       {
         surname: ldap_record[:sn][0],
         given_name: ldap_record[:givenname][0],
@@ -43,9 +43,8 @@ class PsuLdapService
         primary_affiliation: ldap_record[:edupersonprimaryaffiliation][0],
         groups: groups,
         access_id: ldap_record[:uid][0],
-        admin_area: ldap_record[:psadminarea][0],
+        admin_area: ldap_record[:psadminarea][0]
       }
-
     end
 
     def ldap_host
@@ -55,7 +54,5 @@ class PsuLdapService
     def ldap_base
       ENV['LDAP_BASE'] || 'dc=psu,dc=edu'
     end
-
-
   end
 end

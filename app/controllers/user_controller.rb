@@ -11,7 +11,7 @@ class UserController < ApplicationController
   def current_resource_owner
     return {} unless doorkeeper_token
 
-    # TODO move this into a class? Or maybe just a .json view?
+    # TODO: move this into a class? Or maybe just a .json view?
     # TODO what happens when user doesn't exist?
     # TODO what happens when LDAP is down?
     # TODO keep the Hash#merge below, or be more explicit about which individual
@@ -29,7 +29,7 @@ class UserController < ApplicationController
       primary_affiliation: ldap_response[:primary_affiliation],
       groups: ldap_response[:groups],
       access_id: ldap_response[:access_id],
-      admin_area: ldap_response[:admin_area],
+      admin_area: ldap_response[:admin_area]
     }
   end
 end

@@ -13,7 +13,7 @@ module PsuAuthproxy
     # Initialize configuration defaults for originally generated Rails version.
 
     config.action_controller.allow_forgery_protection = false
-    
+
     config.load_defaults 5.2
 
     config.ldap_server = 'dirapps.aset.psu.edu'

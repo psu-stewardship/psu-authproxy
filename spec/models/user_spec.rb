@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
@@ -6,7 +8,7 @@ RSpec.describe User, type: :model do
   describe '#populate_ldap_attributes' do
     let(:user) { User.create!(access_id: 'jqd123', is_admin: false) }
 
-    let(:ldap_mock_response) {
+    let(:ldap_mock_response) do
       {
         first_name: 'Joe',
         last_name: 'Developer',
@@ -14,7 +16,7 @@ RSpec.describe User, type: :model do
         groups: [],
         admin_area: 'UNIVERSITY LIBRARIES'
       }
-    }
+    end
 
     before do
       allow(PsuLdapService).to receive(:find).and_return(ldap_mock_response)

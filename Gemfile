@@ -74,14 +74,16 @@ gem 'net-ldap', '~> 0.16.1'
 
 gem 'pg', '~> 1.1'
 
-gem "okcomputer", "~> 1.17"
+gem 'okcomputer', '~> 1.17'
 
-gem "doorkeeper-openid_connect", "~> 1.7"
+gem 'doorkeeper-openid_connect', '~> 1.7'
 
-gem "simplecov", "~> 0.18.2", :group => :test
+gem 'simplecov', '~> 0.18.2', group: :test
 
-gem "rswag", "~> 2.2"
+gem 'rswag', '~> 2.2'
 
-gem "factory_bot", "~> 5.1"
+gem 'factory_bot', '~> 5.1'
 
-gem "factory_bot_rails", "~> 5.1"
+gem 'factory_bot_rails', '~> 5.1'
+
+gem 'rubocop', '~> 0.79.0'
