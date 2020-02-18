@@ -40,3 +40,7 @@ u = User.create(username: "robot", password: "foobar", is_admin: true)
 
 u.save
 ```
+
+
+# API
+api docs can be found via `/api-docs`
