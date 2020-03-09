@@ -5,7 +5,6 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 vendor/bundle
-.cache
 .local
 .mutagen
 .vscode

@@ -10,7 +10,8 @@ Rails.application.routes.draw do
   # devise_for :machines, path: 'users'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 
-  # TODO: authenticate admin here
+
+  # TODO authenticate admin here
   namespace :api do
     namespace :v1 do
       authenticate :user do
@@ -21,9 +22,9 @@ Rails.application.routes.draw do
     end
   end
 
-  root to: redirect('/oauth/applications')
+  root :to => redirect('/oauth/applications')
 
-  mount OkComputer::Engine, at: '/health'
+  mount OkComputer::Engine, at: "/health"  
 
   get 'user', to: 'user#show'
 end

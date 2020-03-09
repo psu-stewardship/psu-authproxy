@@ -1,5 +1,3 @@
-# frozen_string_literal: true
-
 require 'base64'
 
 Doorkeeper::OpenidConnect.configure do
@@ -14,7 +12,10 @@ Doorkeeper::OpenidConnect.configure do
     User.find_by(id: access_token.resource_owner_id)
   end
 
-  auth_time_from_resource_owner(&:current_sign_in_at)
+  auth_time_from_resource_owner do |resource_owner|
+    # Example implementation:
+    resource_owner.current_sign_in_at
+  end
 
   reauthenticate_resource_owner do |resource_owner, return_to|
     # Example implementation:
@@ -23,7 +24,7 @@ Doorkeeper::OpenidConnect.configure do
     redirect_to new_user_session_url
   end
 
-  subject do |resource_owner, _application|
+  subject do |resource_owner, application|
     # Example implementation:
     resource_owner.access_id
 
@@ -42,18 +43,29 @@ Doorkeeper::OpenidConnect.configure do
 
   # Example claims:
   claims do
-    claim :sub, &:access_id
 
-    normal_claim :email, response: %i[id_token user_info], &:email
+    claim :sub do | resource_owner|
+      resource_owner.access_id
+    end
 
-    claim :given_name, &:given_name
+    normal_claim :email, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.email
+    end
 
-    claim :family_name, &:surname
+    claim :given_name do | resource_owner|
+      resource_owner.given_name
+    end
 
-    normal_claim :name do |resource_owner|
+    claim :family_name do | resource_owner|
+      resource_owner.surname
+    end
+
+    normal_claim :name do | resource_owner|
       "#{resource_owner.given_name} #{resource_owner.surname}"
     end
 
-    claim :groups, response: %i[id_token user_info], &:groups
+    claim :groups, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.groups
+    end
   end
 end
