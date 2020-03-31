@@ -29,7 +29,7 @@ class UserController < ApplicationController
       primary_affiliation: ldap_response[:primary_affiliation],
       groups: ldap_response[:groups],
       access_id: ldap_response[:access_id],
-      admin_area: ldap_response[:admin_area],
+      admin_area: ldap_response[:admin_area]
     }
   end
 end

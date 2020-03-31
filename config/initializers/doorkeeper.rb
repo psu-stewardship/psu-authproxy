@@ -22,7 +22,7 @@ Doorkeeper.configure do
 
   admin_authenticator do |_routes|
     if current_user
-      if Rails.env == 'production'
+      if Rails.env.production?
         head :forbidden unless current_user.is_admin?
       end
     else

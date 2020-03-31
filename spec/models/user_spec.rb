@@ -1,10 +1,12 @@
+# frozen_string_literal: true
+
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  it { is_expected.to be_a User }
+  it { is_expected.to be_a described_class }
 
   describe '#populate_ldap_attributes' do
-    let(:user) { User.create!(access_id: 'jqd123', is_admin: false) }
+    let(:user) { described_class.create!(access_id: 'jqd123', is_admin: false) }
 
     let(:ldap_mock_response) {
       {
