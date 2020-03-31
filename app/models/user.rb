@@ -11,7 +11,7 @@ class User < ApplicationRecord
 
   def populate_ldap_attributes
     is_admin = Array.wrap(ldap_results[:groups]).include?(ldap_admin_umg)
-    update_attributes!(is_admin: is_admin)
+    update!(is_admin: is_admin)
   end
 
   def ldap_results
@@ -42,7 +42,7 @@ class User < ApplicationRecord
 
   private
 
-  def ldap_admin_umg
-    ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
-  end
+    def ldap_admin_umg
+      ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
+    end
 end

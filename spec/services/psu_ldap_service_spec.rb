@@ -10,7 +10,7 @@ RSpec.describe PsuLdapService do
     context 'given a valid psu user id' do
       let(:user_id) { 'djb44' }
 
-      it 'should return a result' do
+      it 'returns a result' do
         expect(attrs[:access_id]).to eq('djb44')
         expect(attrs[:last_name]).to eq('Bohn')
         expect(attrs[:first_name]).to eq('Dann')
