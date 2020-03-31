@@ -1,0 +1,4 @@
+# Sample config file for psu-authproxy
+
+# This value can't be blank in order to test the app, but can be anythning
+OIDC_SIGNING_KEY: 'asdf'
