@@ -42,18 +42,29 @@ Doorkeeper::OpenidConnect.configure do
 
   # Example claims:
   claims do
-    claim :sub, &:access_id
 
-    normal_claim :email, response: [:id_token, :user_info], &:email
+    claim :sub do | resource_owner|
+      resource_owner.access_id
+    end
 
-    claim :given_name, &:given_name
+    normal_claim :email, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.email
+    end
 
-    claim :family_name, &:surname
+    claim :given_name do | resource_owner|
+      resource_owner.given_name
+    end
 
-    normal_claim :name do |resource_owner|
+    claim :family_name do | resource_owner|
+      resource_owner.surname
+    end
+
+    normal_claim :name do | resource_owner|
       "#{resource_owner.given_name} #{resource_owner.surname}"
     end
 
-    claim :groups, response: [:id_token, :user_info], &:groups
+    claim :groups, response: [:id_token, :user_info] do |resource_owner|
+      resource_owner.groups
+    end
   end
 end
