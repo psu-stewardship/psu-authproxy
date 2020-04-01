@@ -4,7 +4,21 @@ WORKDIR /app
 
 ENV TZ=America/New_York
 
-ENV PACKAGES='curl unzip zlib1g-dev'
+ENV PACKAGES='curl \
+    unzip \
+    mariadb-common=1:10.3.22-0+deb10u1 \
+    linux-libc-dev=4.19.98-1 \
+    libss2=1.44.5-1+deb10u3 \
+    libicu-dev=63.1-6+deb10u1 \
+    libext2fs2=1.44.5-1+deb10u3 \
+    libexif-dev=0.6.21-5.1+deb10u1 \
+    libcurl3-gnutls=7.64.0-4+deb10u1 \
+    libcom-err2=1.44.5-1+deb10u3 \
+    icu-devtools=63.1-6+deb10u1 \
+    libpq-dev=11.7-0+deb10u1 \
+    libopenjp2-7=2.3.0-2+deb10u1 \
+    libmariadb-dev=1:10.3.22-0+deb10u1 \
+    zlib1g-dev'
 
 RUN apt-get update && \
   apt-get -y --no-install-recommends install $PACKAGES && \
