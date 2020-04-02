@@ -124,6 +124,7 @@ workflows:
             branches:
               only:
                 - develop
+                - /preview\/.*/
             tags:
               only:
                 - /.*/
