@@ -1,4 +1,3 @@
-FROM ruby:2.6.5 as base
 FROM psul/ruby:2.6.5-node-12 as base
 
 WORKDIR /app
