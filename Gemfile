@@ -19,7 +19,7 @@ gem 'okcomputer', '~> 1.17'
 gem 'pg', '~> 1.1'
 gem 'puma', '~> 3.12'
 gem 'rswag', '~> 2.2'
-gem 'sass-rails', '~> 5.0'
+gem 'sass-rails', '~> 6.0'
 gem 'turbolinks', '~> 5'
 gem 'uglifier', '>= 1.3.0'
 
