@@ -63,7 +63,7 @@ RUN chown -R app /app
 USER app
 
 COPY --from=production /bin/envconsul /bin
-COPY --from=production /app /app
+COPY --from=production --chown=app /app /app
 RUN bundle install --path vendor/bundle
 
 CMD ["./entrypoint.sh"]
