@@ -26,7 +26,7 @@ RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/e
     unzip /tmp/envconsul.zip -d /bin && \
     rm /tmp/envconsul.zip
 
-RUN gem install bundler:$BUNDLER_VERSION
+RUN gem install bundler:2.0.2
 
 RUN addgroup -g 9999 app
 RUN adduser -S --uid 9999 --home /app app app
