@@ -58,6 +58,7 @@ RUN apk --no-cache add \
     nodejs tzdata postgresql-client xz-libs
 
 RUN gem install bundler:2.0.2
+RUN addgroup -g 9999 app
 RUN adduser -S --uid 9999 --home /app app app
 RUN chown -R app /app
 USER app
