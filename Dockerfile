@@ -1,6 +1,3 @@
-
-ARG BUNDLER_VERSION=2.0.2
-
 ## BUILD Container
 FROM ruby:2.6.5-alpine as build
 
@@ -29,7 +26,7 @@ RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/e
 RUN gem install bundler:2.0.2
 
 RUN addgroup -g 1000 app
-RUN adduser -S --uid 1000 --home /app app app
+RUN adduser -S -G app --uid 1000 --home /app app
 RUN chown -R app /app
 USER app
 
@@ -59,7 +56,7 @@ RUN apk --no-cache add \
 
 RUN gem install bundler:2.0.2
 RUN addgroup -g 1000 app
-RUN adduser -S --uid 1000 --home /app app app
+RUN adduser -S -G app --uid 1000 --home /app app
 RUN chown -R app /app
 USER app
 
