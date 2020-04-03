@@ -8,8 +8,11 @@ vendor/bundle
 .local
 .mutagen
 .vscode
+.gem
 .yarnrc
-drone.sec
+.ash_history
+.guard_history
+.cache
 
 coverage
 

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e 
 
 # Vault init container will drop the token in /vault/token; alternatively we can set the VAULT_TOKEN env variable 
@@ -14,7 +14,7 @@ function start_envconsul() {
         -no-prefix=true \
         -vault-renew-token=true \
         -once \
-        -exec='bash start.sh'
+        -exec='sh start.sh'
 }
 
 
@@ -23,5 +23,5 @@ if [ -n "${VAULT_TOKEN}" ]; then
     start_envconsul
 else
     echo "starting the app"
-    bash start.sh
+    sh start.sh
 fi
