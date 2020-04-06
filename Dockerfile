@@ -69,9 +69,11 @@ USER app
 
 COPY --from=nodejs /usr/local/lib /usr/local/lib
 COPY --from=nodejs /usr/local/bin /usr/local/bin
+COPY --from=nodejs /opt /opt
 
 COPY --from=production /bin/envconsul /bin
 COPY --from=production --chown=app /app /app
+
 RUN bundle install --path vendor/bundle
 
 CMD ["./entrypoint.sh"]
