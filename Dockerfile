@@ -20,6 +20,7 @@ RUN apk add --no-cache \
 ### NodeJS
 COPY --from=nodejs /usr/local/lib /usr/local/lib
 COPY --from=nodejs /usr/local/bin /usr/local/bin
+COPY --from=nodejs /opt /opt
 
 ### Envconsul
 RUN curl -Lo /tmp/envconsul.zip https://releases.hashicorp.com/envconsul/0.9.0/envconsul_0.9.0_linux_amd64.zip && \
