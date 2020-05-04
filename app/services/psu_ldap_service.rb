@@ -26,6 +26,7 @@ class PsuLdapService
         filter = "uid=#{access_id}"
         base = ldap_base
         results = ldap_connection.search(base: base, filter: filter)
+        Rails.logger.info("LDAP responded with #{ldap_connection.get_operation_result.message}")
         results[0]
       end
 
