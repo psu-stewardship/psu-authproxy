@@ -34,7 +34,6 @@ end
 group :development do
   gem 'listen', '>= 3.0.5', '< 3.2'
   gem 'niftany'
-  gem 'rubocop', '= 0.79.0' # because Niftany isn't compatible with 0.80 yet
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
