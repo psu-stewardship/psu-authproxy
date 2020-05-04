@@ -43,6 +43,6 @@ class User < ApplicationRecord
   private
 
     def ldap_admin_umg
-      ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
+      ENV['LDAP_ADMIN_UMG'] || 'umg/up.ul.dsrd.sudoers'
     end
 end
