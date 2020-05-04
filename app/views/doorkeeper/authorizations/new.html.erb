@@ -29,7 +29,7 @@
       <%= hidden_field_tag :nonce, @pre_auth.nonce %>
       <%= hidden_field_tag :code_challenge, @pre_auth.code_challenge %>
       <%= hidden_field_tag :code_challenge_method, @pre_auth.code_challenge_method %>
-      <%= submit_tag t('doorkeeper.authorizations.buttons.authorize'), class: "btn btn-success btn-lg btn-block" %>
+      <%= submit_tag t('doorkeeper.authorizations.buttons.authorize'), class: 'btn btn-success btn-lg btn-block' %>
     <% end %>
     <%= form_tag oauth_authorization_path, method: :delete do %>
       <%= hidden_field_tag :client_id, @pre_auth.client.uid %>
@@ -40,7 +40,7 @@
       <%= hidden_field_tag :nonce, @pre_auth.nonce %>
       <%= hidden_field_tag :code_challenge, @pre_auth.code_challenge %>
       <%= hidden_field_tag :code_challenge_method, @pre_auth.code_challenge_method %>
-      <%= submit_tag t('doorkeeper.authorizations.buttons.deny'), class: "btn btn-danger btn-lg btn-block" %>
+      <%= submit_tag t('doorkeeper.authorizations.buttons.deny'), class: 'btn btn-danger btn-lg btn-block' %>
     <% end %>
   </div>
 </main>
