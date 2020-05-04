@@ -17,7 +17,7 @@ RSpec.describe PsuLdapService do
         expect(attrs[:surname]).to eq('Bohn')
         expect(attrs[:given_name]).to eq('Dann')
         expect(attrs[:primary_affiliation]).to eq 'STAFF'
-        expect(attrs[:groups]).to include('cn=psu.up.all,dc=psu,dc=edu')
+        expect(attrs[:groups].length).to be > 0
         expect(attrs[:admin_area]).to be_a(String)
       end
     end
