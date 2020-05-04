@@ -23,7 +23,7 @@ RSpec.describe User, type: :model do
     end
 
     context 'when the user is a member of the admin group' do
-      before { ldap_mock_response[:groups] = ['cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'] }
+      before { ldap_mock_response[:groups] = ['umg/up.ul.dsrd.sudoers'] }
 
       it 'updates the user, setting is_admin to true' do
         expect { user.populate_ldap_attributes }
