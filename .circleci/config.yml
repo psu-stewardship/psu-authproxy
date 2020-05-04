@@ -90,12 +90,7 @@ workflows:
   psu-authproxy:
     jobs:
 
-      - build:
-          filters:
-            branches:
-              only:
-                - develop
-                - /preview\/.*/
+      - build
 
       - release:
           filters:
