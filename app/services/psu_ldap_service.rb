@@ -7,53 +7,23 @@ require 'net/ldap'
 class PsuLdapService
   class << self
     def find(access_id)
-      record = find_user_record(access_id)
-      map_record_to_attributes(record)
+      filter = Net::LDAP::Filter.construct("uid=#{access_id}")
+      ldap_record = PsuDir::LdapUser.get_users(filter, ['uid', 'displayname', 'sn', 'givenname', 'edupersonprimaryaffiliation', 'psadminarea'])
+      groups = PsuDir::LdapUser.get_groups(access_id)
+
+      return {} if ldap_record.blank?
+
+      {
+        surname: ldap_record[0][:sn][0],
+        given_name: ldap_record[0][:givenname][0],
+        last_name: ldap_record[0][:sn][0],
+        first_name: ldap_record[0][:givenname][0],
+        primary_affiliation: ldap_record[0][:edupersonprimaryaffiliation][0],
+        groups: groups,
+        access_id: ldap_record[0][:uid][0],
+        admin_area: ldap_record[0][:psadminarea][0]
+      }
+
     end
-
-    private
-
-      def ldap_connection
-        return @ldap if @ldap
-
-        @ldap = Net::LDAP.new
-        @ldap.host = ldap_host
-        @ldap.bind
-        @ldap
-      end
-
-      def find_user_record(access_id)
-        filter = "uid=#{access_id}"
-        base = ldap_base
-        results = ldap_connection.search(base: base, filter: filter)
-        Rails.logger.info("LDAP responded with #{ldap_connection.get_operation_result.message}")
-        results[0]
-      end
-
-      def map_record_to_attributes(ldap_record)
-        return {} if ldap_record.blank?
-
-        groups = ldap_record[:psmemberof].map { |g| g.force_encoding('UTF-8').to_s }
-
-        # TODO Struct object here instead of hash?
-        {
-          surname: ldap_record[:sn][0],
-          given_name: ldap_record[:givenname][0],
-          last_name: ldap_record[:sn][0],
-          first_name: ldap_record[:givenname][0],
-          primary_affiliation: ldap_record[:edupersonprimaryaffiliation][0],
-          groups: groups,
-          access_id: ldap_record[:uid][0],
-          admin_area: ldap_record[:psadminarea][0]
-        }
-      end
-
-      def ldap_host
-        ENV['LDAP_HOST'] || 'dirapps.aset.psu.edu'
-      end
-
-      def ldap_base
-        ENV['LDAP_BASE'] || 'dc=psu,dc=edu'
-      end
   end
 end
