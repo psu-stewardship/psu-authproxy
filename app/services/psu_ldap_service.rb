@@ -23,7 +23,6 @@ class PsuLdapService
         access_id: ldap_record[0][:uid][0],
         admin_area: ldap_record[0][:psadminarea][0]
       }
-
     end
   end
 end
