@@ -1,4 +1,4 @@
-version: '3.2'
+version: '3.5'
 services:
   db:
     environment:
@@ -6,14 +6,17 @@ services:
       POSTGRES_USER: psuauthproxy
       POSTGRES_DB: psuauthproxy
     image: postgres:10
-    ports:
-    - "5433:5432"
     volumes:
     - db-data:/var/lib/postgresql/data
+    ports:
+    - "5433:5432"
   web:
     tty: true
     stdin_open: true
-    environment:
+    environment: 
+      APP_VERSION: local
+      OIDC_SIGNING_KEY: ${OIDC_SIGNING_KEY:-"Zm9vCg=="}
+      OIDC_ISSUER: ${OIDC_ISSUER:-http://localhost:3000}
       RAILS_SERVE_STATIC_FILES: "true"
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
@@ -21,14 +24,9 @@ services:
       POSTGRES_HOST: db
       POSTGRES_DB: psuauthproxy
       POSTGRES_PASSWORD: psuauthproxy
-    build: .
-    command: >
-      sh -c "echo starting database migrations &&
-            yarn &&
-            rm -f tmp/pids/server.pid
-            bundle exec rails db:migrate &&
-            echo starting rails &&
-            bundle exec rails s -b 0.0.0.0"
+    build: 
+      context: .
+      target: base
     volumes:
       - /app/vendor/bundle
       - /app/node_modules

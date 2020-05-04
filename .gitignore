@@ -11,6 +11,8 @@ vendor/bundle
 .yarnrc
 drone.sec
 
+coverage
+
 # Ignore bundler config.
 /.bundle
 
@@ -36,3 +38,9 @@ drone.sec
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
+
+
+.bash_history
+
+# Ignore application configuration
+/config/application.yml

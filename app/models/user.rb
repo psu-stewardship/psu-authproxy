@@ -5,14 +5,29 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
 
-  devise :remote_user_authenticatable
+  devise :remote_user_authenticatable, :trackable, :database_authenticatable
   # devise :database_authenticatable, :registerable,
   #        :recoverable, :rememberable, :validatable
 
   def populate_ldap_attributes
-    results = PsuLdapService.find(access_id)
-    is_admin = Array.wrap(results[:groups]).include?(ldap_admin_umg)
-    update_attributes!(is_admin: is_admin)
+    is_admin = Array.wrap(ldap_results[:groups]).include?(ldap_admin_umg)
+    update!(is_admin: is_admin)
+  end
+
+  def ldap_results
+    @ldap_results ||= PsuLdapService.find(access_id)
+  end
+
+  def groups
+    ldap_results[:groups]
+  end
+
+  def surname
+    ldap_results[:surname]
+  end
+
+  def given_name
+    ldap_results[:given_name]
   end
 
   has_many :access_grants,
@@ -27,7 +42,7 @@ class User < ApplicationRecord
 
   private
 
-  def ldap_admin_umg
-    ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
-  end
+    def ldap_admin_umg
+      ENV['LDAP_ADMIN_UMG'] || 'cn=umg/up.ul.dsrd.sudoers,dc=psu,dc=edu'
+    end
 end

@@ -22,12 +22,14 @@ class UserController < ApplicationController
     {
       uid: user.access_id,
       email: user.email,
+      surname: ldap_response[:surname],
+      given_name: ldap_response[:given_name],
       last_name: ldap_response[:last_name],
       first_name: ldap_response[:first_name],
       primary_affiliation: ldap_response[:primary_affiliation],
       groups: ldap_response[:groups],
       access_id: ldap_response[:access_id],
-      admin_area: ldap_response[:admin_area],
+      admin_area: ldap_response[:admin_area]
     }
   end
 end

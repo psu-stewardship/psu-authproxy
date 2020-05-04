@@ -22,7 +22,9 @@ Doorkeeper.configure do
 
   admin_authenticator do |_routes|
     if current_user
-      head :forbidden unless current_user.is_admin?
+      if Rails.env.production?
+        head :forbidden unless current_user.is_admin?
+      end
     else
       warden.authenticate!(scope: :user)
     end
@@ -157,7 +159,7 @@ Doorkeeper.configure do
   # `grant_type` - the grant type of the request (see Doorkeeper::OAuth)
   # `scopes` - the requested scopes (see Doorkeeper::OAuth::Scopes)
   #
-  # use_refresh_token
+  use_refresh_token
 
   # Provide support for an owner to be assigned to each registered application (disabled by default)
   # Optional parameter confirmation: true (default: false) if you want to enforce ownership of
@@ -172,7 +174,7 @@ Doorkeeper.configure do
   # https://doorkeeper.gitbook.io/guides/ruby-on-rails/scopes
   #
   default_scopes :public
-  # optional_scopes :write, :update
+  optional_scopes :openid, :email, :profile
 
   # Allows to restrict only certain scopes for grant_type.
   # By default, all the scopes will be available for all the grant types.
@@ -215,7 +217,7 @@ Doorkeeper.configure do
   #
   # force_ssl_in_redirect_uri !Rails.env.development?
   #
-  # force_ssl_in_redirect_uri { |uri| uri.host != 'localhost' }
+  force_ssl_in_redirect_uri { |uri| uri.host != 'localhost' }
 
   # Specify what redirect URI's you want to block during Application creation.
   # Any redirect URI is whitelisted by default.
@@ -288,7 +290,7 @@ Doorkeeper.configure do
   #   http://tools.ietf.org/html/rfc6819#section-4.4.2
   #   http://tools.ietf.org/html/rfc6819#section-4.4.3
   #
-  # grant_flows %w[authorization_code client_credentials]
+  grant_flows %w[authorization_code client_credentials implicit_oidc]
 
   # Allows to customize OAuth grant flows that +each+ application support.
   # You can configure a custom block (or use a class respond to `#call`) that must

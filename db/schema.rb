@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_22_194949) do
+ActiveRecord::Schema.define(version: 2020_02_17_013736) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,6 +24,8 @@ ActiveRecord::Schema.define(version: 2019_10_22_194949) do
     t.datetime "created_at", null: false
     t.datetime "revoked_at"
     t.string "scopes", default: "", null: false
+    t.string "code_challenge"
+    t.string "code_challenge_method"
     t.index ["application_id"], name: "index_oauth_access_grants_on_application_id"
     t.index ["resource_owner_id"], name: "index_oauth_access_grants_on_resource_owner_id"
     t.index ["token"], name: "index_oauth_access_grants_on_token", unique: true
@@ -57,6 +59,11 @@ ActiveRecord::Schema.define(version: 2019_10_22_194949) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "oauth_openid_requests", force: :cascade do |t|
+    t.integer "access_grant_id", null: false
+    t.string "nonce", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -67,6 +74,12 @@ ActiveRecord::Schema.define(version: 2019_10_22_194949) do
     t.datetime "updated_at", null: false
     t.string "access_id"
     t.boolean "is_admin", default: false, null: false
+    t.integer "sign_in_count", default: 0, null: false
+    t.datetime "current_sign_in_at"
+    t.datetime "last_sign_in_at"
+    t.inet "current_sign_in_ip"
+    t.inet "last_sign_in_ip"
+    t.string "username"
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
@@ -75,4 +88,5 @@ ActiveRecord::Schema.define(version: 2019_10_22_194949) do
   add_foreign_key "oauth_access_grants", "users", column: "resource_owner_id"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
   add_foreign_key "oauth_access_tokens", "users", column: "resource_owner_id"
+  add_foreign_key "oauth_openid_requests", "oauth_access_grants", column: "access_grant_id"
 end
