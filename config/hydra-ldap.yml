@@ -1,0 +1,18 @@
+development:
+  host: <%= ENV.fetch("LDAP_HOST") { "dirapps.aset.psu.edu" }  %>
+  port: 389
+  group_base: <%= ENV.fetch("LDAP_BASE") { "dc=psu,dc=edu" } %>
+  base: <%= ENV.fetch("LDAP_BASE") { "dc=psu,dc=edu" } %>
+  uid: uid
+test:
+  host: <%= ENV.fetch("LDAP_HOST") { "dirapps.aset.psu.edu" }  %>
+  port: 389
+  group_base: <%= ENV.fetch("LDAP_BASE") { "dc=psu,dc=edu" } %>
+  base: <%= ENV.fetch("LDAP_BASE") { "dc=psu,dc=edu" } %>
+  uid: uid
+production:
+  host: <%= ENV.fetch("LDAP_HOST") { "dirapps.aset.psu.edu" }  %>
+  port: 389
+  group_base: <%= ENV.fetch("LDAP_BASE") { "dc=psu,dc=edu" } %>
+  base: <%= ENV.fetch("LDAP_BASE") { "dc=psu,dc=edu" } %>
+  uid: uid
