@@ -2,10 +2,9 @@
 
 class UserController < ApplicationController
   before_action :doorkeeper_authorize!
-  respond_to :json
 
   def show
-    respond_with current_resource_owner
+    render json: current_resource_owner, status: :ok
   end
 
   def current_resource_owner
