@@ -42,6 +42,6 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'rspec-rails', '~> 3.8'
   gem 'selenium-webdriver'
-  gem 'simplecov', '~> 0.18.2', group: :test
+  gem 'simplecov', '~> 0.17.1', group: :test
   gem 'webdrivers'
 end
