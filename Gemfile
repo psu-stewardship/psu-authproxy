@@ -40,6 +40,7 @@ end
 
 group :test do
   gem 'capybara', '>= 2.15'
+  gem 'oauth2'
   gem 'rspec-rails', '~> 3.8'
   gem 'selenium-webdriver'
   gem 'simplecov', '~> 0.17.1', group: :test

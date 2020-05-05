@@ -5,6 +5,7 @@
 #   git config --global core.excludesfile '~/.gitignore_global'
 
 vendor/bundle
+.cache
 .local
 .mutagen
 .vscode
@@ -44,3 +45,5 @@ coverage
 
 # Ignore application configuration
 /config/application.yml
+cc-test-reporter
+.wget-hsts
