@@ -42,8 +42,7 @@ Doorkeeper::OpenidConnect.configure do
 
   # Example claims:
   claims do
-
-    claim :sub do | resource_owner|
+    claim :sub do |resource_owner|
       resource_owner.access_id
     end
 
@@ -51,15 +50,15 @@ Doorkeeper::OpenidConnect.configure do
       resource_owner.email
     end
 
-    claim :given_name do | resource_owner|
+    claim :given_name do |resource_owner|
       resource_owner.given_name
     end
 
-    claim :family_name do | resource_owner|
+    claim :family_name do |resource_owner|
       resource_owner.surname
     end
 
-    normal_claim :name do | resource_owner|
+    normal_claim :name do |resource_owner|
       "#{resource_owner.given_name} #{resource_owner.surname}"
     end
 

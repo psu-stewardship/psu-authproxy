@@ -12,3 +12,9 @@ AllCops:
     - 'vendor/**/*'
     - 'bin/**/*'
     - 'node_modules/**/*'
+
+
+# This does not play well with the doorkeeper-openid_connect gem
+Style/SymbolProc:
+  Exclude:
+    - 'config/initializers/doorkeeper_openid_connect.rb' 
