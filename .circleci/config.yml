@@ -47,7 +47,7 @@ jobs:
 
   build:
     docker: 
-      - image: tmaier/docker-compose:latest
+      - image: devago/docker-compose
         environment:
           DOCKER_USERNAME: 'robot$circleci'
     steps:
