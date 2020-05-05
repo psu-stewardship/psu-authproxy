@@ -7,6 +7,7 @@ services:
       OIDC_SIGNING_KEY: ${OIDC_SIGNING_KEY:-Zm9vCg==}
       OIDC_ISSUER: ${OIDC_ISSUER:-http://localhost:3000}
       RAILS_SERVE_STATIC_FILES: "true"
+      CIRCLE_SHA1: ${CIRCLE_SHA1}
       RAILS_ENV: development
       RAILS_LOG_TO_STDOUT: "true"
       POSTGRES_USER: psuauthproxy
