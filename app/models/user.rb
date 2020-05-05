@@ -10,8 +10,7 @@ class User < ApplicationRecord
   #        :recoverable, :rememberable, :validatable
 
   def populate_ldap_attributes
-    is_admin = Array.wrap(ldap_results[:groups]).include?(ldap_admin_umg)
-    update!(is_admin: is_admin)
+    update!(is_admin: groups.include?(ldap_admin_umg))
   end
 
   def ldap_results
@@ -19,7 +18,7 @@ class User < ApplicationRecord
   end
 
   def groups
-    ldap_results[:groups]
+    Array.wrap(ldap_results.fetch(:groups, []))
   end
 
   def surname

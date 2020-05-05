@@ -1,0 +1,8 @@
+version: '2'
+exclude_patterns:
+  - 'bin/'
+  - 'config/'
+  - 'db/'
+  - 'node_modules/'
+  - 'spec/'
+  - 'vendor/'
