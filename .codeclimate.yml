@@ -6,7 +6,6 @@ exclude_patterns:
   - 'app/channels'
   - 'app/jobs'
   - 'app/mailers'
-  - 'app/controllers/user_controller.rb'
   - 'node_modules/'
   - 'spec/'
   - 'vendor/'
