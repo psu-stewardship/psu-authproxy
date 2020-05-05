@@ -7,6 +7,8 @@ require 'net/ldap'
 class PsuLdapService
   class << self
     def find(access_id)
+      return {} if access_id.nil?
+
       record = find_user_record(access_id)
       map_record_to_attributes(record)
     end

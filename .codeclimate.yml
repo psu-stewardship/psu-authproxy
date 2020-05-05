@@ -1,0 +1,11 @@
+version: '2'
+exclude_patterns:
+  - 'bin/'
+  - 'config/'
+  - 'db/'
+  - 'app/channels'
+  - 'app/jobs'
+  - 'app/mailers'
+  - 'node_modules/'
+  - 'spec/'
+  - 'vendor/'
