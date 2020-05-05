@@ -26,3 +26,5 @@ echo "Running RSpec with coverage reporting"
 bundle exec rspec
 RSPEC_EXIT_CODE=$?
 ./${REPORTER_BIN} after-build
+
+exit ${RSPEC_EXIT_CODE}
