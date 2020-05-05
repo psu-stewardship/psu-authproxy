@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
-require_relative '../../app/services/psu_ldap_service'
+require 'rails_helper'
 
 RSpec.describe PsuLdapService do
   describe '.find' do
@@ -28,10 +27,19 @@ RSpec.describe PsuLdapService do
       it { is_expected.to eq({}) }
     end
 
+    context 'given a nul user id' do
+      let(:user_id) { nil }
+
+      it { is_expected.to eq({}) }
+    end
+
     context 'given a specially malformed user id' do
       let(:user_id) { 'la;ksjf;lkasjdflj' }
 
-      xit { is_expected.to be_nil }
+      it do
+        pending 'Need an appropriate example'
+        expect(attrs).to eq({})
+      end
     end
   end
 end

@@ -25,4 +25,11 @@ echo "Running RSpec with coverage reporting"
 ./${REPORTER_BIN} before-build
 bundle exec rspec
 RSPEC_EXIT_CODE=$?
-./${REPORTER_BIN} after-build
+
+if [ ${RSPEC_EXIT_CODE} -eq "0" ]; then
+  echo "Submitting coverage results to Code Climate"
+  ./${REPORTER_BIN} after-build
+else
+  echo "RSpec failed. Coverage results will not be submitted"
+  exit ${RSPEC_EXIT_CODE}
+fi
