@@ -65,6 +65,11 @@ jobs:
           name: Build Image
           command: |
             docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 .
+      - run:
+          name: Niftany
+          command: |
+            export TAG=${CIRCLE_SHA1}
+            docker-compose -f docker-compose.yml -f docker-compose.test.yml run --name=niftany test /app/bin/ci-niftany
       - run: 
           name: Test
           command: |
