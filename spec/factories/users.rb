@@ -4,7 +4,7 @@ require Rails.root.join('spec/support/factory_bot_helpers')
 
 FactoryBot.define do
   factory :user do
-    access_id { generate_access_id }
+    access_id { FactoryBotHelpers.generate_access_id }
     email { "#{access_id}@psu.edu" }
     is_admin { false }
     password { SecureRandom.uuid }
