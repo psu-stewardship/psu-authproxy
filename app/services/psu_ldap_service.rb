@@ -7,55 +7,30 @@ require 'net/ldap'
 class PsuLdapService
   class << self
     def find(access_id)
-      return {} if access_id.nil?
+      return LdapUser.new if access_id.nil?
 
       record = find_user_record(access_id)
-      map_record_to_attributes(record)
+      LdapUser.new(record)
     end
 
     private
 
-      def ldap_connection
-        return @ldap if @ldap
-
-        @ldap = Net::LDAP.new
-        @ldap.host = ldap_host
-        @ldap.bind
-        @ldap
-      end
-
       def find_user_record(access_id)
-        filter = "uid=#{access_id}"
-        base = ldap_base
-        results = ldap_connection.search(base: base, filter: filter)
+        results = ldap_connection.search(base: ldap_base, filter: "uid=#{access_id}")
         Rails.logger.info("LDAP responded with #{ldap_connection.get_operation_result.message}")
         results[0]
       end
 
-      def map_record_to_attributes(ldap_record)
-        return {} if ldap_record.blank?
-
-        groups = ldap_record[:psmemberof].map { |g| g.force_encoding('UTF-8').to_s }
-
-        # TODO Struct object here instead of hash?
-        {
-          surname: ldap_record[:sn][0],
-          given_name: ldap_record[:givenname][0],
-          last_name: ldap_record[:sn][0],
-          first_name: ldap_record[:givenname][0],
-          primary_affiliation: ldap_record[:edupersonprimaryaffiliation][0],
-          groups: groups,
-          access_id: ldap_record[:uid][0],
-          admin_area: ldap_record[:psadminarea][0]
-        }
+      def ldap_connection
+        @ldap_connection ||= Net::LDAP.new(host: ldap_host, bind: true)
       end
 
       def ldap_host
-        ENV['LDAP_HOST'] || 'dirapps.aset.psu.edu'
+        ENV.fetch('LDAP_HOST', 'dirapps.aset.psu.edu')
       end
 
       def ldap_base
-        ENV['LDAP_BASE'] || 'dc=psu,dc=edu'
+        ENV.fetch('LDAP_BASE', 'dc=psu,dc=edu')
       end
   end
 end

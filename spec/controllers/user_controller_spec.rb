@@ -15,8 +15,9 @@ RSpec.describe UserController, type: :controller do
       end
 
       it 'returns information about the user' do
-        expect(response).to be_success
+        expect(response).to be_successful
         expect(json['email']).to eq(user.email)
+        expect(json['given_name']).to eq(user.given_name)
       end
     end
 

@@ -4,6 +4,6 @@ module FactoryBotHelpers
   def self.generate_access_id
     alphabet = ('a'..'z').to_a
 
-    format("#{alphabet.sample(3)}#{rand(100)}")
+    format("#{alphabet.sample(3).join}#{rand(100)}")
   end
 end

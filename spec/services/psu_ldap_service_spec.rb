@@ -4,33 +4,48 @@ require 'rails_helper'
 
 RSpec.describe PsuLdapService do
   describe '.find' do
-    subject(:attrs) { described_class.find(user_id) }
+    subject { described_class.find(user_id) }
 
     context 'given a valid psu user id' do
       let(:user_id) { 'djb44' }
 
-      it 'returns a result' do
-        expect(attrs[:access_id]).to eq('djb44')
-        expect(attrs[:last_name]).to eq('Bohn')
-        expect(attrs[:first_name]).to eq('Dann')
-        expect(attrs[:surname]).to eq('Bohn')
-        expect(attrs[:given_name]).to eq('Dann')
-        expect(attrs[:primary_affiliation]).to eq 'STAFF'
-        expect(attrs[:groups]).to include('cn=psu.up.all,dc=psu,dc=edu')
-        expect(attrs[:admin_area]).to be_a(String)
-      end
+      it { is_expected.to be_a(LdapUser) }
+      its(:uid) { is_expected.to eq('djb44') }
+      its(:last_name) { is_expected.to eq('Bohn') }
+      its(:first_name) { is_expected.to eq('Dann') }
+      its(:surname) { is_expected.to eq('Bohn') }
+      its(:given_name) { is_expected.to eq('Dann') }
+      its(:primary_affiliation) { is_expected.to eq 'STAFF' }
+      its(:groups) { is_expected.to include('cn=psu.up.all,dc=psu,dc=edu') }
+      its(:admin_area) { is_expected.to be_a(String) }
     end
 
     context 'given a bogus psu user id' do
       let(:user_id) { 'completelybogus' }
 
-      it { is_expected.to eq({}) }
+      it { is_expected.to be_a(LdapUser) }
+      its(:uid) { is_expected.to be_nil }
+      its(:last_name) { is_expected.to be_nil }
+      its(:first_name) { is_expected.to be_nil }
+      its(:surname) { is_expected.to be_nil }
+      its(:given_name) { is_expected.to be_nil }
+      its(:primary_affiliation) { is_expected.to be_nil }
+      its(:groups) { is_expected.to be_empty }
+      its(:admin_area) { is_expected.to be_nil }
     end
 
     context 'given a nul user id' do
       let(:user_id) { nil }
 
-      it { is_expected.to eq({}) }
+      it { is_expected.to be_a(LdapUser) }
+      its(:uid) { is_expected.to be_nil }
+      its(:last_name) { is_expected.to be_nil }
+      its(:first_name) { is_expected.to be_nil }
+      its(:surname) { is_expected.to be_nil }
+      its(:given_name) { is_expected.to be_nil }
+      its(:primary_affiliation) { is_expected.to be_nil }
+      its(:groups) { is_expected.to be_empty }
+      its(:admin_area) { is_expected.to be_nil }
     end
 
     context 'given a specially malformed user id' do
