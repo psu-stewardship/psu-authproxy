@@ -17,4 +17,4 @@ services:
       POSTGRES_HOST: db
       POSTGRES_DB: psuauthproxy
       POSTGRES_PASSWORD: psuauthproxy
-    image: harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$TAG
+    image: harbor.k8s.libraries.psu.edu/library/psu-authproxy:$TAG
