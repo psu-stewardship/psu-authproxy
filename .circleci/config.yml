@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   release:
     docker:
-      - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+      - image: harbor.k8s.libraries.psu.edu/public/drone-utils:latest
         environment:
           DOCKER_USERNAME: 'robot$circleci'
     steps:
@@ -13,14 +13,14 @@ jobs:
       - run:
           name: "Tag released image"
           command: |
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
-            docker pull harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1
-            docker tag harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
-            docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
+            docker login -u $DOCKER_USERNAME -p $HARBOR_PASSWORD harbor.k8s.libraries.psu.edu
+            docker pull harbor.k8s.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1
+            docker tag harbor.k8s.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 harbor.k8s.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
+            docker push harbor.k8s.libraries.psu.edu/library/psu-authproxy:$CIRCLE_TAG
 
   argocd_qa:
     docker:
-      - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+      - image: harbor.k8s.libraries.psu.edu/public/drone-utils:latest
     steps:
     - add_ssh_keys
     - run:
@@ -34,7 +34,7 @@ jobs:
 
   argocd_dev:
     docker:
-      - image: harbor.dsrd.libraries.psu.edu/public/drone-utils:latest
+      - image: harbor.k8s.libraries.psu.edu/public/drone-utils:latest
     steps:
     - add_ssh_keys
     - run:
@@ -64,7 +64,7 @@ jobs:
       - run:
           name: Build Image
           command: |
-            docker build -t harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 .
+            docker build -t harbor.k8s.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 .
       - run:
           name: Niftany
           command: |
@@ -87,8 +87,8 @@ jobs:
       - run:
           name: Push the Container
           command: |
-            docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD harbor.dsrd.libraries.psu.edu
-            docker push harbor.dsrd.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 
+            docker login -u $DOCKER_USERNAME -p $HARBOR_PASSWORD harbor.k8s.libraries.psu.edu
+            docker push harbor.k8s.libraries.psu.edu/library/psu-authproxy:$CIRCLE_SHA1 
 
 
 workflows:
